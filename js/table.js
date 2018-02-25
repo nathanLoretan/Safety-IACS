@@ -5,7 +5,8 @@
 4. ajouter relation entre cellules
 */
 
-const nbrCol = 2;
+// Initial state of the table
+const nbrCol = 4;
 var   nbrRow = 1;
 
 function cellHTML(row, col, zone) {
@@ -83,11 +84,39 @@ $(document).ready(function() {
                         var temp = table.rows["row-" + row].cells["col-" + i].rowSpan;
                         table.rows["row-" + row].cells["col-" + i].rowSpan = 1;
 
+                        // Create and insert the new cell in the right place
+                        // 1. if length = 0
+                        //     -> insertCell(0)
+                        // 2. else
+                        //     -> look the different existing cell
+                        //     -> search the col idx < or >
+                        //     -> insert at the right position
                         if(table.rows["row-" + (row+1)].cells.length == 0) {
                             var cell = selectedRow.insertCell(0);
                         }
                         else {
-                            var cell = selectedRow.insertCell(i);
+                            for(c = 0; c < table.rows["row-" + (row+1)].cells.length; c++) {
+
+                                // Get the id of the existing cell on the row
+                                cmp_id   = table.rows["row-" + (row+1)].cells[c].getAttribute('id');
+
+                                // Get the col number of the existing cell on the row
+                                cmp_col  = parseInt(cmp_id.substring(4, cmp_id.length));
+
+                                // Get the index of the cell existing on the row
+                                cell_idx = table.rows["row-" + (row+1)].cells[c].cellIndex;
+
+                                // If the column is before the existing one
+                                if(col < cmp_col) {
+                                    var cell = selectedRow.insertCell(cell_idx);
+                                    break;
+                                }
+                                // Insert the new cell at the last position
+                                else if(c == table.rows["row-" + (row+1)].cells.length-1) {
+                                    var cell = selectedRow.insertCell(-1);
+                                    break;
+                                }
+                            }
                         }
 
                         cell.id = "col-" + i;
@@ -96,11 +125,39 @@ $(document).ready(function() {
                     }
                     else {
 
+                        // Create and insert the new cell in the right place
+                        // 1. if length = 0
+                        //     -> insertCell(0)
+                        // 2. else
+                        //     -> look the different existing cell
+                        //     -> search the col idx < or >
+                        //     -> insert at the right position
                         if(table.rows["row-" + (row+1)].cells.length == 0) {
                             var cell = selectedRow.insertCell(0);
                         }
                         else {
-                            var cell = selectedRow.insertCell(i);
+                            for(c = 0; c < table.rows["row-" + (row+1)].cells.length; c++) {
+
+                                // Get the id of the existing cell on the row
+                                cmp_id   = table.rows["row-" + (row+1)].cells[c].getAttribute('id');
+
+                                // Get the col number of the existing cell on the row
+                                cmp_col  = parseInt(cmp_id.substring(4, cmp_id.length));
+
+                                // Get the index of the cell existing on the row
+                                cell_idx = table.rows["row-" + (row+1)].cells[c].cellIndex;
+
+                                // If the column is before the existing one
+                                if(col < cmp_col) {
+                                    var cell = selectedRow.insertCell(cell_idx);
+                                    break;
+                                }
+                                // Insert the new cell at the last position
+                                else if(c == table.rows["row-" + (row+1)].cells.length-1) {
+                                    var cell = selectedRow.insertCell(-1);
+                                    break;
+                                }
+                            }
                         }
 
                         cell.id = "col-" + i;
@@ -116,7 +173,7 @@ $(document).ready(function() {
                     }
 
                     if(nbrRow-n != nbrRow-1) {
-                        table.rows["row-" + (nbrRow-n)].cells["col-" + i].rowSpan += 1;
+                        table.rows["row-" + (nbrRow-n)].cells["col-" + i].rowSpan = n;
                     }
                 }
             }
@@ -179,94 +236,15 @@ $(document).ready(function() {
                  table.rows["row-" + (nbrRow-(n+1))].cells["col-" + col].rowSpan += temp;
 
                  // Delete the last cell
-                 table.rows["row-" + (nbrRow-n)].deleteCell(col);
+                 cell_idx = table.rows["row-" + (nbrRow-n)].cells["col-" + col].cellIndex;
+                 table.rows["row-" + (nbrRow-n)].deleteCell(cell_idx);
 
                  // Change icone - -> +
                  document.getElementById('icon-' + (nbrRow-(n+1)) + '-' + col).className = "glyphicon glyphicon-plus";
 
                  // Change state of the button
                  document.getElementById('btn-' + (nbrRow-(n+1)) + '-' + col).setAttribute('state', '+');
-
-                 // // 2. Add rowSpan to the new last cell
-                 // // Add the new cell in the table
-                 // for (i = 0; i < nbrCol; i++) {
-                 //
-                 //     if(i != col) {
-                 //
-                 //         // Search the last above cell to merge with new new one
-                 //         var n = 1
-                 //         while(typeof table.rows["row-" + (nbrRow-n)].cells["col-" + i] == 'undefined') {
-                 //             n += 1;
-                 //         }
-                 //
-                 //         if(nbrRow-n != nbrRow-1) {
-                 //             table.rows["row-" + (nbrRow-n)].cells["col-" + i].rowSpan -= 1;
-                 //         }
-                 //     }
-                 // }
-
-                 // 3. Delete the last cell
-                 // 4. Change the new last cell to add
-
-
-                // table.deleteCell();
-
             }
-
-            // for (i = 0; i < nbrCol; i++) {
-            //     if(typeof table.rows["row-" + (nbrRow-1)].cells["col-" + i] !== 'undefined' && i != col) {
-            //         isRemovableRow = false;
-            //     }
-            // }
-            //
-            // console.log(isRemovableRow);
-
-            // return;
-            // 1. check if it is the only one on the row
-            // 2.
-
-            // row
-            // col
-            //
-            // table.deleteCell()
-
-            // table.deleteRow(table.rows["row-" + row].rowIndex);
         }
     });
 });
-
-// rowspan="2"
-// colspan="2"
-
-// function addRow(input) {
-//
-//     console.log("addRow");
-//
-//     console.log([id^="btn"])
-//
-//     var table = document.getElementById("myTable");
-//     var i = parseInt(input.id.substring(3, input.id.length));
-//     document.getElementById('icon' + i).className = "glyphicon glyphicon-minus";
-//     var row = table.insertRow(table.rows.length);
-//     row.id = "row" + (i + 1);
-//     var cell = row.insertCell(0);
-//     cell.innerHTML = '<div class="input-group">'+
-//                         '<input type="text" class="form-control" />'+
-//                         '<span class="input-group-btn">'+
-//                             '<button id="btn'+(i+1)+'" type="button" class="btn btn-primary" onclick="addRow(this)">'+
-//                                 '<span id="icon'+(i+1)+'" class="glyphicon glyphicon-plus"></span>'+
-//                             '</button>'+
-//                         '</span>'+
-//                      '</div>';
-//     console.log(i);
-//     $('#btn'+i).attr('onclick', 'remRow(this)');
-// }
-//
-// function remRow(input) {
-//     console.log("remRow");
-//
-//     var table = document.getElementById("myTable");
-//     var i = parseInt(input.id.substring(3, input.id.length));
-//     var ind = table.rows["row" +i].rowIndex;
-//     table.deleteRow(ind);
-// }
