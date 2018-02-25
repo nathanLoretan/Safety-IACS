@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script type="text/javascript" src="js/table.js"></script>
+</head>
+<body>
+
+    <h2>Cell that spans two rows:</h2>
+    <table style="width:100%">
+
+        <!-- Define table Header -->
+        <tr>
+            <th rowspan="2">Zone</th>
+            <th rowspan="2">Zone Description</th>
+            <th rowspan="2">Elements</th>
+            <th rowspan="2">Elements Description</th>
+            <th colspan="2">Failure Mode</th>
+            <th rowspan="2">Failure Effect</th>
+            <th rowspan="2">Severity</th>
+            <th rowspan="2">Occurence Rate</th>
+            <th rowspan="2">Failure Detection</th>
+            <th rowspan="2">Mitigations Action</th>
+            <th rowspan="2">Notes</th>
+        </tr>
+
+        <tr>
+            <th>Global</th>
+            <th>Local</th>
+        </tr>
+
+        <!-- Define Content -->
+        <tr>
+            <td>
+
+            </td>
+            <td><input type="text"/></td>
+            <td rowspan="3">
+                 <div w3-include-html="components/text.html"></div>
+            </td>
+            <!-- <td rowspan="3">&nbsp;</td> -->
+            <td rowspan="3">&nbsp;</td>
+            <td rowspan="3">&nbsp;</td>
+            <td rowspan="3">&nbsp;</td>
+            <td rowspan="3">&nbsp;</td>
+            <td rowspan="3">&nbsp;</td>
+            <td rowspan="3">&nbsp;</td>
+            <td rowspan="3">&nbsp;</td>
+            <td rowspan="3">&nbsp;</td>
+        </tr>
+
+        <!-- Define Connection Header -->
+        <tr>
+            <th>Connection</th>
+            <th>Connection Description</th>
+        </tr>
+
+        <tr>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+
+
+
+    </table>
+
+</body>
+</html>
