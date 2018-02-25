@@ -80,7 +80,7 @@ $(document).ready(function() {
                     if(rowspan != 1) {
 
                         // Save the number of merge row
-                        temp = table.rows["row-" + row].cells["col-" + i].rowSpan;
+                        var temp = table.rows["row-" + row].cells["col-" + i].rowSpan;
                         table.rows["row-" + row].cells["col-" + i].rowSpan = 1;
 
                         if(table.rows["row-" + (row+1)].cells.length == 0) {
@@ -127,25 +127,90 @@ $(document).ready(function() {
             if(table.rows["row-" + (nbrRow-1)].cells.length == 1 &&
                typeof table.rows["row-" + (nbrRow-1)].cells["col-" + col] !== 'undefined'){
 
-                   // Copy the values of the cells below this one
-                   for(i = 0; i < (nbrRow - (row+1)); i++) {
-                       var input1 = '#input-' + i + '-' + col;
-                       var input2 = '#input-' + (i+1) + '-' + col;
-                       $(input1).val($(input2).val());
+               // Copy the values of the cells below this one
+               for(i = 0; i < (nbrRow - (row+1)); i++) {
+                   var input1 = '#input-' + i + '-' + col;
+                   var input2 = '#input-' + (i+1) + '-' + col;
+                   $(input1).val($(input2).val());
+                }
+
+                // Remove each useless cells merged with each column
+                for (i = 0; i < nbrCol; i++) {
+
+                    if(i != col) {
+
+                        // Search the last above cell to merge with new new one
+                        var n = 1
+                        while(typeof table.rows["row-" + (nbrRow-n)].cells["col-" + i] == 'undefined') {
+                            n += 1;
+                        }
+
+                        if(nbrRow-n != nbrRow-1) {
+                            table.rows["row-" + (nbrRow-n)].cells["col-" + i].rowSpan -= 1;
+                        }
                     }
+                }
 
-                   table.deleteRow(table.rows["row-" + (nbrRow-1)].rowIndex);
-                   nbrRow -= 1;
+               table.deleteRow(table.rows["row-" + (nbrRow-1)].rowIndex);
+               nbrRow -= 1;
 
-                   // Change icone - -> +
-                   document.getElementById('icon-' + (nbrRow-1) + '-' + col).className = "glyphicon glyphicon-plus";
+               // Change icone - -> +
+               document.getElementById('icon-' + (nbrRow-1) + '-' + col).className = "glyphicon glyphicon-plus";
 
-                   // Change state of the button
-                   document.getElementById('btn-' + (nbrRow-1) + '-' + col).setAttribute('state', '+');
+               // Change state of the button
+               document.getElementById('btn-' + (nbrRow-1) + '-' + col).setAttribute('state', '+');
             }
             else {
-                // C'est la merde
-                console.log('here');
+                // Copy the values of the cells below this one
+                for(i = 0; i < (nbrRow - (row+1)); i++) {
+                    var input1 = '#input-' + i + '-' + col;
+                    var input2 = '#input-' + (i+1) + '-' + col;
+                    $(input1).val($(input2).val());
+                 }
+
+                 // Search the last above cell to merge with new new one
+                 var n = 1
+                 while(typeof table.rows["row-" + (nbrRow-n)].cells["col-" + col] == 'undefined') {
+                     n += 1;
+                 }
+
+                 // Merge the belowed cell to the one just above
+                 var temp = table.rows["row-" + (nbrRow-n)].cells["col-" + col].rowSpan;
+                 table.rows["row-" + (nbrRow-(n+1))].cells["col-" + col].rowSpan += temp;
+
+                 // Delete the last cell
+                 table.rows["row-" + (nbrRow-n)].deleteCell(col);
+
+                 // Change icone - -> +
+                 document.getElementById('icon-' + (nbrRow-(n+1)) + '-' + col).className = "glyphicon glyphicon-plus";
+
+                 // Change state of the button
+                 document.getElementById('btn-' + (nbrRow-(n+1)) + '-' + col).setAttribute('state', '+');
+
+                 // // 2. Add rowSpan to the new last cell
+                 // // Add the new cell in the table
+                 // for (i = 0; i < nbrCol; i++) {
+                 //
+                 //     if(i != col) {
+                 //
+                 //         // Search the last above cell to merge with new new one
+                 //         var n = 1
+                 //         while(typeof table.rows["row-" + (nbrRow-n)].cells["col-" + i] == 'undefined') {
+                 //             n += 1;
+                 //         }
+                 //
+                 //         if(nbrRow-n != nbrRow-1) {
+                 //             table.rows["row-" + (nbrRow-n)].cells["col-" + i].rowSpan -= 1;
+                 //         }
+                 //     }
+                 // }
+
+                 // 3. Delete the last cell
+                 // 4. Change the new last cell to add
+
+
+                // table.deleteCell();
+
             }
 
             // for (i = 0; i < nbrCol; i++) {
