@@ -27,8 +27,8 @@ function relHTML(zone, row, col) {
 
 function zoneHTML(zone) {
 
-    zoneTable1 = zone + '-0'
-    zoneTable2 = zone + '-1'
+    var zoneTable1 = zone + '-0';
+    var zoneTable2 = zone + '-1';
 
     return  '' +
     '<table class="table" id="zone-' + zoneTable1 + '">' +
@@ -184,6 +184,12 @@ function zoneHTML(zone) {
             '</tr>' +
         '</tbody>' +
     '</table>' +
+
+    '<span class="input-group-btn">' +
+        '<button id="remove-zone-' + zone + '" type="button" class="btn btn-primary" >' +
+            'Remove a zone' +
+        '</button>' +
+    '</span>'
 }
 
 function addNewCell(table, zone, row, col, selectedRow) {
@@ -252,17 +258,17 @@ $(document).ready(function() {
         var row  = parseInt(id.substring(8, id.length));
         var col  = parseInt(id.substring(10, id.length));
 
-        var nbrRow = table.rows.length;
-
         // Get the columns bind to this one
         var rel = $('td[rel="' + zone + '-' + row + '-' + col + '"]');
 
         // Determine the number of column in the table
         if(type == 0) {
-            var nbrCol = 5// nbrColType1;
+            var nbrCol =  nbrColType1;
+            var nbrRow = table.rows.length-1;
         }
         else {
             var nbrCol = nbrColType2;
+            var nbrRow = table.rows.length-2;
         }
 
         // Add a new cell
@@ -471,5 +477,22 @@ $(document).ready(function() {
                  document.getElementById('btn-' + zone + '-' + (nbrRow-(n+1)) + '-' + col).setAttribute('state', '+');
             }
         }
+    });
+
+    $(document).on("click", 'button[id="add-zone"]', function(ev) {
+
+        document.body.innerHTML += zoneHTML(nbrZone);
+        nbrZone += 1;
+    });
+
+    $(document).on("click", 'button[id^="remove-zone"]', function(ev) {
+
+        // Get parent table
+        var id    = $(this).attr('id');
+        var zone  = parseInt(id.substring(12, id.length));
+
+        document.getElementById('zone-' + zone + '-' + 0).remove();
+        document.getElementById('zone-' + zone + '-' + 1).remove();
+        document.getElementById('remove-zone-' + zone).remove();
     });
 });
