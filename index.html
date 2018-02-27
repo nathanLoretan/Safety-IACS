@@ -2,69 +2,175 @@
 <html>
 <head>
 
+    <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript" src="js/table.js"></script>
+
 </head>
 <body>
 
-    <h2>Cell that spans two rows:</h2>
-    <table style="width:100%">
+    <span class="input-group-btn">
+        <button id="add-zone" type="button" class="btn btn-primary" >
+            Add a zone
+        </button>
+    </span>
 
-        <!-- Define table Header -->
-        <tr>
-            <th rowspan="2">Zone</th>
-            <th rowspan="2">Zone Description</th>
-            <th rowspan="2">Elements</th>
-            <th rowspan="2">Elements Description</th>
-            <th colspan="2">Failure Mode</th>
-            <th rowspan="2">Failure Effect</th>
-            <th rowspan="2">Severity</th>
-            <th rowspan="2">Occurence Rate</th>
-            <th rowspan="2">Failure Detection</th>
-            <th rowspan="2">Mitigations Action</th>
-            <th rowspan="2">Notes</th>
-        </tr>
+    <table class="table" id="zone-0-0">
+        <thead>
+            <tr>
+                <th>Zone</th>
+                <th>Zone Description</th>
+                <th>Connection</th>
+                <th>Connection Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="row-0-0-0">
 
-        <tr>
-            <th>Global</th>
-            <th>Local</th>
-        </tr>
+                <!-- Zone -->
+                <td id="col-0-0-0-0" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-0-0-0" type="text" class="form-control"/>
+                    </div>
+                </td>
 
-        <!-- Define Content -->
-        <tr>
-            <td>
+                <!-- Elements Description -->
+                <td id="col-0-0-0-1" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-0-0-1" type="text" class="form-control"/>
+                    </div>
+                </td>
 
-            </td>
-            <td><input type="text"/></td>
-            <td rowspan="3">
-                 <div w3-include-html="components/text.html"></div>
-            </td>
-            <!-- <td rowspan="3">&nbsp;</td> -->
-            <td rowspan="3">&nbsp;</td>
-            <td rowspan="3">&nbsp;</td>
-            <td rowspan="3">&nbsp;</td>
-            <td rowspan="3">&nbsp;</td>
-            <td rowspan="3">&nbsp;</td>
-            <td rowspan="3">&nbsp;</td>
-            <td rowspan="3">&nbsp;</td>
-            <td rowspan="3">&nbsp;</td>
-        </tr>
+                <!-- Connection -->
+                <td id="col-0-0-0-2" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-0-0-2" type="text" class="form-control"/>
+                        <span class="input-group-btn">
+                            <button id="btn-0-0-0-2" state="+" zone="0-0" type="button" class="btn btn-primary" >
+                                <span id="icon-0-0-0-2" class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
+                </td>
 
-        <!-- Define Connection Header -->
-        <tr>
-            <th>Connection</th>
-            <th>Connection Description</th>
-        </tr>
+                <!-- Connection Description -->
+                <td id="col-0-0-0-3" rel="0-0-0-2" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-0-0-3" type="text" class="form-control"/>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-        <tr>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-        </tr>
+    <table class="table" id="zone-0-1">
+        <thead>
+            <tr>
+                <th rowspan="2">Elements</th>
+                <th rowspan="2">Elements Description</th>
+                <th rowspan="2">Failure Mode</th>
+                <th colspan="2">Failure Effect</th>
+                <th rowspan="2">Severity</th>
+                <th rowspan="2">Occurence Rate</th>
+                <th rowspan="2">Failure Detection</th>
+                <th rowspan="2">Mitigations Action</th>
+                <th rowspan="2">Notes</th>
+            </tr>
+            <tr>
+                <th>Global</th>
+                <th>Local</th>
+            </tr>
 
+        </thead>
+        <tbody>
+            <tr id="row-0-1-0">
 
+                <!-- Elements -->
+                <td id="col-0-1-0-0" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-1-0-0" type="text" class="form-control"/>
+                        <span class="input-group-btn">
+                            <button id="btn-0-1-0-0" state="+" zone="0-1" type="button" class="btn btn-primary" >
+                                <span id="icon-0-1-0-0" class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
+                </td>
 
+                <!-- Elements Description, related to elements -->
+                <td id="col-0-1-0-1" rel="0-1-0-0" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-1-0-1" type="text" class="form-control"/>
+                    </div>
+                </td>
+
+                <!-- Failure Mode -->
+                <td id="col-0-1-0-2" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-1-0-2" type="text" class="form-control"/>
+                        <span class="input-group-btn">
+                            <button id="btn-0-1-0-2" state="+" zone="0-1" type="button" class="btn btn-primary" >
+                                <span id="icon-0-1-0-2" class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
+                </td>
+
+                <!-- Failure Effect global,  related to failure mode -->
+                <td id="col-0-1-0-3" rel="0-1-0-2" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-1-0-3" type="text" class="form-control"/>
+                    </div>
+                </td>
+
+                <!-- Failure Effect local,  related to failure mode -->
+                <td id="col-0-1-0-4" rel="0-1-0-2" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-1-0-4" type="text" class="form-control"/>
+                    </div>
+                </td>
+
+                <!-- Severity -->
+                <td id="col-0-1-0-5" rel="0-1-0-2" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-1-0-5" type="text" class="form-control"/>
+                    </div>
+                </td>
+
+                <!-- Occurence Rate -->
+                <td id="col-0-1-0-6" rel="0-1-0-2" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-1-0-6" type="text" class="form-control"/>
+                    </div>
+                </td>
+
+                <!-- Failure Detection -->
+                <td id="col-0-1-0-7" rel="0-1-0-2" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-1-0-7" type="text" class="form-control"/>
+                    </div>
+                </td>
+
+                <!-- Mitigations Action -->
+                <td id="col-0-1-0-8" rel="0-1-0-2" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-1-0-8" type="text" class="form-control"/>
+                    </div>
+                </td>
+
+                <!-- Notes -->
+                <td id="col-0-1-0-9" rel="0-1-0-2" rowspan="1">
+                    <div class="input-group">
+                        <input id="input-0-1-0-9" type="text" class="form-control"/>
+                    </div>
+                </td>
+
+            </tr>
+        </tbody>
     </table>
 
 </body>
