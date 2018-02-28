@@ -1,8 +1,22 @@
 // Initial state of the table
 const nbrColType1 = 4;
 const nbrColType2 = 10;
-// var   nbrRow = 1;   // TODO: have a specific number of row for each table
 var   nbrZone = 1;
+
+var zone_list = ["test1", "test2", "test3", "test4", "test5"];
+var zone_description_list = [];
+var conn_list = [];
+var conn_description_list = [];
+var element_list = [];
+var element_description_list = [];
+var failure_mode_list = [];
+var effect_global_list = [];
+var effect_local_list = [];
+var severity_list = [];
+var occurrence_list = [];
+var detection_list = [];
+var mitigate_list = [];
+var notes_list = [];
 
 function cellHTML(zone, row, col) {
     return  '<div class="input-group">' +
@@ -46,21 +60,27 @@ function zoneHTML(zone) {
                 '<!-- Zone -->' +
                 '<td id="col-' + zoneTable1 + '-0-0" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable1 + '-0-0" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable1 + '-0-0" type="text" class="form-control" list="zone"/>' +
+                        '<datalist id="zone">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
 
                 '<!-- Elements Description -->' +
                 '<td id="col-' + zoneTable1 + '-0-1" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable1 + '-0-1" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable1 + '-0-1" type="text" class="form-control" list="zone-description"/>' +
+                        '<datalist id="zone-description">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
 
                 '<!-- Connection -->' +
                 '<td id="col-' + zoneTable1 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable1 + '-0-2" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable1 + '-0-2" type="text" class="form-control" list="conn"/>' +
+                        '<datalist id="conn">' +
+                        '</datalist>' +
                         '<span class="input-group-btn">' +
                             '<button id="btn-' + zoneTable1 + '-0-2" state="+" zone="' + zoneTable1 + '" type="button" class="btn btn-primary" >' +
                                 '<span id="icon-' + zoneTable1 + '-0-2" class="glyphicon glyphicon-plus"></span>' +
@@ -72,7 +92,9 @@ function zoneHTML(zone) {
                 '<!-- Connection Description -->' +
                 '<td id="col-' + zoneTable1 + '-0-3" rel="' + zoneTable1 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable1 + '-0-3" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable1 + '-0-3" type="text" class="form-control" list="conn-description"/>' +
+                        '<datalist id="conn-description">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
             '</tr>' +
@@ -104,7 +126,9 @@ function zoneHTML(zone) {
                 '<!-- Elements -->' +
                 '<td id="col-' + zoneTable2 + '-0-0" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-0" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-0" type="text" class="form-control" list="element"/>' +
+                        '<datalist id="element">' +
+                        '</datalist>' +
                         '<span class="input-group-btn">' +
                             '<button id="btn-' + zoneTable2 + '-0-0" state="+" zone="' + zoneTable2 + '" type="button" class="btn btn-primary" >' +
                                 '<span id="icon-' + zoneTable2 + '-0-0" class="glyphicon glyphicon-plus"></span>' +
@@ -116,14 +140,18 @@ function zoneHTML(zone) {
                 '<!-- Elements Description, related to elements -->' +
                 '<td id="col-' + zoneTable2 + '-0-1" rel="' + zoneTable2 + '-0-0" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-1" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-1" type="text" class="form-control" list="element-description"/>' +
+                        '<datalist id="element-description">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
 
                 '<!-- Failure Mode -->' +
                 '<td id="col-' + zoneTable2 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-2" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-2" type="text" class="form-control" list="failure-mode"/>' +
+                        '<datalist id="failure-mode">' +
+                        '</datalist>' +
                         '<span class="input-group-btn">' +
                             '<button id="btn-' + zoneTable2 + '-0-2" state="+" zone="' + zoneTable2 + '" type="button" class="btn btn-primary" >' +
                                 '<span id="icon-' + zoneTable2 + '-0-2" class="glyphicon glyphicon-plus"></span>' +
@@ -135,49 +163,63 @@ function zoneHTML(zone) {
                 '<!-- Failure Effect global,  related to failure mode -->' +
                 '<td id="col-' + zoneTable2 + '-0-3" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-3" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-3" type="text" class="form-control" list="effect-global"/>' +
+                        '<datalist id="effect-global">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
 
                 '<!-- Failure Effect local,  related to failure mode -->' +
                 '<td id="col-' + zoneTable2 + '-0-4" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-4" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-4" type="text" class="form-control" list="effect-local"/>' +
+                        '<datalist id="effect-local">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
 
                 '<!-- Severity -->' +
                 '<td id="col-' + zoneTable2 + '-0-5" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-5" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-5" type="text" class="form-control" list="severity"/>' +
+                        '<datalist id="severity">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
 
                 '<!-- Occurence Rate -->' +
                 '<td id="col-' + zoneTable2 + '-0-6" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-6" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-6" type="text" class="form-control" list="occurrence"/>' +
+                        '<datalist id="occurrence">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
 
                 '<!-- Failure Detection -->' +
                 '<td id="col-' + zoneTable2 + '-0-7" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-7" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-7" type="text" class="form-control" list="detection"/>' +
+                        '<datalist id="detection">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
 
                 '<!-- Mitigations Action -->' +
                 '<td id="col-' + zoneTable2 + '-0-8" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-8" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-8" type="text" class="form-control" list="mitigate"/>' +
+                        '<datalist id="mitigate">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
 
                 '<!-- Notes -->' +
                 '<td id="col-' + zoneTable2 + '-0-9" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-9" type="text" class="form-control"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-9" type="text" class="form-control" list="notes"/>' +
+                        '<datalist id="notes">' +
+                        '</datalist>' +
                     '</div>' +
                 '</td>' +
 
@@ -228,6 +270,66 @@ function addNewCell(table, zone, row, col, selectedRow) {
     }
 }
 
+function fillDatalist() {
+
+    document.getElementById('zone').innerHTML = '';
+    document.getElementById('zone-description').innerHTML = '';
+    document.getElementById('conn').innerHTML = '';
+    document.getElementById('conn-description').innerHTML = '';
+    document.getElementById('element').innerHTML = '';
+    document.getElementById('element-description').innerHTML = '';
+    document.getElementById('failure-mode').innerHTML = '';
+    document.getElementById('effect-global').innerHTML = '';
+    document.getElementById('effect-local').innerHTML = '';
+    document.getElementById('severity').innerHTML = '';
+    document.getElementById('occurrence').innerHTML = '';
+    document.getElementById('detection').innerHTML = '';
+    document.getElementById('mitigate').innerHTML = '';
+    document.getElementById('notes').innerHTML = '';
+
+    for(i = 0; i < zone_list.length; i++)
+        document.getElementById('zone').innerHTML += '<option value="'+zone_list[i]+'" />';
+
+    for(i = 0; i < zone_description_list.length; i++)
+        document.getElementById('zone-description').innerHTML += '<option value="'+zone_description_list[i]+'" />';
+
+    for(i = 0; i < conn_list.length; i++)
+        document.getElementById('conn').innerHTML += '<option value="'+conn_list[i]+'" />';
+
+    for(i = 0; i < conn_description_list.length; i++)
+        document.getElementById('conn-description').innerHTML += '<option value="'+conn_description_list[i]+'" />';
+
+    for(i = 0; i < element_list.length; i++)
+        document.getElementById('element').innerHTML += '<option value="'+element_list[i]+'" />';
+
+    for(i = 0; i < element_description_list.length; i++)
+        document.getElementById('element-description').innerHTML += '<option value="'+element_description_list[i]+'" />';
+
+    for(i = 0; i < failure_mode_list.length; i++)
+        document.getElementById('failure-mode').innerHTML += '<option value="'+failure_mode_list[i]+'" />';
+
+    for(i = 0; i < effect_global_list.length; i++)
+        document.getElementById('effect-global').innerHTML += '<option value="'+effect_global_list[i]+'" />';
+
+    for(i = 0; i < effect_local_list.length; i++)
+        document.getElementById('effect-local').innerHTML += '<option value="'+effect_local_list[i]+'" />';
+
+    for(i = 0; i < severity_list.length; i++)
+        document.getElementById('severity').innerHTML += '<option value="'+severity_list[i]+'" />';
+
+    for(i = 0; i < occurrence_list.length; i++)
+        document.getElementById('occurrence').innerHTML += '<option value="'+occurrence_list[i]+'" />';
+
+    for(i = 0; i < detection_list.length; i++)
+        document.getElementById('detection').innerHTML += '<option value="'+detection_list[i]+'" />';
+
+    for(i = 0; i < zone_list.length; i++)
+        document.getElementById('mitigate').innerHTML += '<option value="'+mitigate_list[i]+'" />';
+
+    for(i = 0; i < notes_list.length; i++)
+        document.getElementById('notes').innerHTML += '<option value="'+notes_list[i]+'" />';
+}
+
 $(document).ready(function() {
 
     /*
@@ -244,6 +346,8 @@ $(document).ready(function() {
     *   . c = row
     *   . d = column
     */
+
+    fillDatalist();
 
     $(document).on("click", 'button[id^="btn"]', function(ev) {
 
@@ -483,6 +587,8 @@ $(document).ready(function() {
 
         document.body.innerHTML += zoneHTML(nbrZone);
         nbrZone += 1;
+
+        fillDatalist();
     });
 
     $(document).on("click", 'button[id^="remove-zone"]', function(ev) {
