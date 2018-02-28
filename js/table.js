@@ -4,7 +4,7 @@ const nbrColType2 = 10;
 var   nbrZone = 1;
 
 var zone_list = ["test1", "test2", "test3", "test4", "test5"];
-var zone_description_list = [];
+var zone_description_list = ["test1", "test2", "test3", "test4", "test5"];
 var conn_list = [];
 var conn_description_list = [];
 var element_list = [];
@@ -45,7 +45,7 @@ function zoneHTML(zone) {
     var zoneTable2 = zone + '-1';
 
     return  '' +
-    '<table class="table" id="zone-' + zoneTable1 + '">' +
+    '<table id="zone-' + zoneTable1 + '">' +
         '<thead>' +
             '<tr>' +
                 '<th>Zone</th>' +
@@ -69,7 +69,7 @@ function zoneHTML(zone) {
                 '<!-- Elements Description -->' +
                 '<td id="col-' + zoneTable1 + '-0-1" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable1 + '-0-1" type="text" class="form-control" list="zone-description"/>' +
+                        '<textarea id="input-' + zoneTable1 + '-0-1" type="text" class="form-control" list="zone-description"/></textarea>' +
                         '<datalist id="zone-description">' +
                         '</datalist>' +
                     '</div>' +
@@ -92,7 +92,7 @@ function zoneHTML(zone) {
                 '<!-- Connection Description -->' +
                 '<td id="col-' + zoneTable1 + '-0-3" rel="' + zoneTable1 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable1 + '-0-3" type="text" class="form-control" list="conn-description"/>' +
+                        '<textarea id="input-' + zoneTable1 + '-0-3" type="text" class="form-control" list="conn-description"/></textarea>' +
                         '<datalist id="conn-description">' +
                         '</datalist>' +
                     '</div>' +
@@ -101,7 +101,7 @@ function zoneHTML(zone) {
         '</tbody>' +
     '</table>' +
 
-    '<table class="table" id="zone-' + zoneTable2 + '">' +
+    '<table id="zone-' + zoneTable2 + '">' +
         '<thead>' +
             '<tr>' +
                 '<th rowspan="2">Elements</th>' +
@@ -140,7 +140,7 @@ function zoneHTML(zone) {
                 '<!-- Elements Description, related to elements -->' +
                 '<td id="col-' + zoneTable2 + '-0-1" rel="' + zoneTable2 + '-0-0" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-1" type="text" class="form-control" list="element-description"/>' +
+                        '<textarea id="input-' + zoneTable2 + '-0-1" type="text" class="form-control" list="element-description"/></textarea>' +
                         '<datalist id="element-description">' +
                         '</datalist>' +
                     '</div>' +
@@ -217,7 +217,7 @@ function zoneHTML(zone) {
                 '<!-- Notes -->' +
                 '<td id="col-' + zoneTable2 + '-0-9" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                     '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-9" type="text" class="form-control" list="notes"/>' +
+                        '<textarea id="input-' + zoneTable2 + '-0-9" type="text" class="form-control" list="notes"/></textarea>' +
                         '<datalist id="notes">' +
                         '</datalist>' +
                     '</div>' +
@@ -600,5 +600,23 @@ $(document).ready(function() {
         document.getElementById('zone-' + zone + '-' + 0).remove();
         document.getElementById('zone-' + zone + '-' + 1).remove();
         document.getElementById('remove-zone-' + zone).remove();
+    });
+
+    $(document).on("click", 'button[id="print"]', function(ev) {
+
+        // Save the current content of the page
+        var originalDoc = document.body.innerHTML;
+
+        // Remove some element to print the page
+        $('#print').remove();
+        $('#add-zone').remove();
+        $('button[id^="remove-zone"]').remove();
+        $('button[id^="btn"]').remove();
+
+        window.print();
+
+        // Restore the content of the page
+        document.body.innerHTML = originalDoc;
+
     });
 });

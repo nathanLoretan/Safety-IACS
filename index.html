@@ -6,12 +6,33 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
 
+    <style type="text/css" media="print">
+      @page { size: landscape; }
+    </style>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript" src="js/table.js"></script>
 
 </head>
 <body>
+
+    <span class="input-group-btn">
+        <button id="print" type="button" class="btn btn-primary" >
+            Print
+        </button>
+    </span>
+
+    <!-- =================================================================== -->
+
+    <div>
+        System: <input class="formula" type="text" name="system">
+        Date: <input class="formula"  type="date" name="date">
+        Authore: <input class="formula"  type="text" name="authore">
+        Approved by: <input class="formula"  type="text" name="approved-by">
+    </div>
+
+    <!-- =================================================================== -->
 
     <span class="input-group-btn">
         <button id="add-zone" type="button" class="btn btn-primary" >
@@ -21,11 +42,7 @@
 
     <!-- =================================================================== -->
 
-    <!-- <input type="text" name="city" list="zone">
-    <datalist id="zone">
-    </datalist> -->
-
-    <table class="table" id="zone-0-0">
+    <table id="zone-0-0">
         <thead>
             <tr>
                 <th>Zone</th>
@@ -49,7 +66,7 @@
                 <!-- Zone Description -->
                 <td id="col-0-0-0-1" rowspan="1">
                     <div class="input-group">
-                        <input id="input-0-0-0-1" type="text" class="form-control" list="zone-description"/>
+                        <textarea  id="input-0-0-0-1" type="text" class="form-control" list="zone-description"/></textarea>
                         <datalist id="zone-description">
                         </datalist>
                     </div>
@@ -72,7 +89,7 @@
                 <!-- Connection Description -->
                 <td id="col-0-0-0-3" rel="0-0-0-2" rowspan="1">
                     <div class="input-group">
-                        <input id="input-0-0-0-3" type="text" class="form-control" list="conn-description"/>
+                        <textarea id="input-0-0-0-3" type="text" class="form-control" list="conn-description"/></textarea>
                         <datalist id="conn-description">
                         </datalist>
                     </div>
@@ -81,7 +98,7 @@
         </tbody>
     </table>
 
-    <table class="table" id="zone-0-1">
+    <table id="zone-0-1">
         <thead>
             <tr>
                 <th rowspan="2">Elements</th>
@@ -120,7 +137,7 @@
                 <!-- Elements Description, related to elements -->
                 <td id="col-0-1-0-1" rel="0-1-0-0" rowspan="1">
                     <div class="input-group">
-                        <input id="input-0-1-0-1" type="text" class="form-control" list="element-description"/>
+                        <textarea id="input-0-1-0-1" type="text" class="form-control" list="element-description"/></textarea>
                         <datalist id="element-description">
                         </datalist>
                     </div>
@@ -197,7 +214,7 @@
                 <!-- Notes -->
                 <td id="col-0-1-0-9" rel="0-1-0-2" rowspan="1">
                     <div class="input-group">
-                        <input id="input-0-1-0-9" type="text" class="form-control" list="notes"/>
+                        <textarea id="input-0-1-0-9" type="text" class="form-control" list="notes"/></textarea>
                         <datalist id="notes">
                         </datalist>
                     </div>
