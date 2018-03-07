@@ -3,12 +3,8 @@
 <head>
 
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css"> -->
     <link rel="stylesheet" href="css/styles.css">
-
-    <style type="text/css" media="print">
-      @page { size: landscape; }
-    </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
@@ -17,221 +13,209 @@
 </head>
 <body>
 
-    <span class="input-group-btn">
-        <button id="print" type="button" class="btn btn-primary" >
-            Print
-        </button>
-    </span>
-
     <!-- =================================================================== -->
 
-    <div>
-        System: <input class="formula" type="text" name="system">
-        Date: <input class="formula"  type="date" name="date">
-        Authore: <input class="formula"  type="text" name="authore">
-        Approved by: <input class="formula"  type="text" name="approved-by">
+    <div id="data">
+        <div class="text">
+            <label>System:</label>
+            <input type="text" name="system"/>
+        </div>
+        <div class="text">
+            <label>Date:</label>
+            <input class="formula"  type="date" name="date"/>
+        </div>
+        <div class="text">
+            <label>Authore:</label>
+            <input class="formula"  type="text" name="authore"/>
+        </div>
+        <div class="text">
+            <label>Approved by:</label>
+            <input class="formula"  type="text" name="approved-by"/>
+        </div>
     </div>
 
     <!-- =================================================================== -->
+    <hr/>
 
-    <span class="input-group-btn">
-        <button id="add-zone" type="button" class="btn btn-primary" >
-            Add a zone
-        </button>
-    </span>
+    <div id="control">
+        <!-- <span class="input-group-btn"> -->
+            <button id="print" type="button" class="btn-control">
+                 <!-- class="btn btn-primary" > -->
+                Print
+            </button>
+        <!-- </span> -->
+        <!-- <span class="input-group-btn"> -->
+            <button id="add-zone" type="button" class="btn-control" >
+                Add a zone
+            </button>
+        <!-- </span> -->
+    </div>
 
     <!-- =================================================================== -->
+    <hr/>
+    <br/>
+    <!-- =================================================================== -->
 
-    <table id="zone-0-0">
-        <thead>
-            <tr>
-                <th>Zone</th>
-                <th>Zone Description</th>
-                <th>Connection</th>
-                <th>Connection Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr id="row-0-0-0">
+    <div class="table-container">
+        <table id="zone-0-0" class="zone-conn">
+            <thead>
+                <tr>
+                    <th>Zone</th>
+                    <th>Zone Description</th>
+                    <th>Connection</th>
+                    <th>Connection Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="row-0-0-0">
 
-                <!-- Zone -->
-                <td id="col-0-0-0-0" rowspan="1">
-                    <div class="input-group">
-                        <input id="input-0-0-0-0" type="text" class="form-control" list="zone"/>
-                        <datalist id="zone">
-                        </datalist>
-                    </div>
-                </td>
+                    <!-- Zone -->
+                    <td id="col-0-0-0-0" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <input id="input-0-0-0-0" type="text" class="form-control" list="zone"/>
+                            <datalist class="dl-zone"></datalist>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Zone Description -->
-                <td id="col-0-0-0-1" rowspan="1">
-                    <div class="input-group">
-                        <textarea  id="input-0-0-0-1" type="text" class="form-control" list="zone-description"/></textarea>
-                        <datalist id="zone-description">
-                        </datalist>
-                    </div>
-                </td>
+                    <!-- Zone Description -->
+                    <td id="col-0-0-0-1" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <textarea id="input-0-0-0-1" type="text" class="form-control" list="zone-description"/></textarea>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Connection -->
-                <td id="col-0-0-0-2" rowspan="1">
-                    <div class="input-group">
-                        <input id="input-0-0-0-2" type="text" class="form-control" list="conn"/>
-                        <datalist id="conn">
-                        </datalist>
-                        <span class="input-group-btn">
-                            <button id="btn-0-0-0-2" state="+" zone="0-0" type="button" class="btn btn-primary" >
-                                <span id="icon-0-0-0-2" class="glyphicon glyphicon-plus"></span>
-                            </button>
-                        </span>
-                    </div>
-                </td>
+                    <!-- Connection -->
+                    <td id="col-0-0-0-2" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <input id="input-0-0-0-2" hasBtn="true" type="text" class="form-control" list="conn"/>
+                            <datalist class="dl-conn"></datalist>
+                            <button id="btn-0-0-0-2" state="+" zone="0-0" type="button" class="btn btn-primary">+</button>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Connection Description -->
-                <td id="col-0-0-0-3" rel="0-0-0-2" rowspan="1">
-                    <div class="input-group">
-                        <textarea id="input-0-0-0-3" type="text" class="form-control" list="conn-description"/></textarea>
-                        <datalist id="conn-description">
-                        </datalist>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    <!-- Connection Description -->
+                    <td id="col-0-0-0-3" rel="0-0-0-2" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <textarea id="input-0-0-0-3" type="text" class="form-control" list="conn-description"/></textarea>
+                        <!-- </div> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <table id="zone-0-1">
-        <thead>
-            <tr>
-                <th rowspan="2">Elements</th>
-                <th rowspan="2">Elements Description</th>
-                <th rowspan="2">Failure Mode</th>
-                <th colspan="2">Failure Effect</th>
-                <th rowspan="2">Severity</th>
-                <th rowspan="2">Occurence Rate</th>
-                <th rowspan="2">Failure Detection</th>
-                <th rowspan="2">Mitigations Action</th>
-                <th rowspan="2">Notes</th>
-            </tr>
-            <tr>
-                <th>Global</th>
-                <th>Local</th>
-            </tr>
+    <!-- =================================================================== -->
+    <br/>
+    <!-- =================================================================== -->
 
-        </thead>
-        <tbody>
-            <tr id="row-0-1-0">
+    <div class="table-container">
+        <table id="zone-0-1" class="el-fail">
+            <thead>
+                <tr>
+                    <th rowspan="2">Elements</th>
+                    <th rowspan="2">Elements Description</th>
+                    <th rowspan="2">Failure Mode</th>
+                    <th colspan="2">Failure Effect</th>
+                    <th rowspan="2">Risk Level</th>
+                    <th rowspan="2">Countermeasures</th>
+                    <th rowspan="2">Requirements</th>
+                    <th rowspan="2">Notes</th>
+                </tr>
+                <tr>
+                    <th>Global</th>
+                    <th>Local</th>
+                </tr>
 
-                <!-- Elements -->
-                <td id="col-0-1-0-0" rowspan="1">
-                    <div class="input-group">
-                        <input id="input-0-1-0-0" type="text" class="form-control" list="element"/>
-                        <datalist id="element">
-                        </datalist>
-                        <span class="input-group-btn">
-                            <button id="btn-0-1-0-0" state="+" zone="0-1" type="button" class="btn btn-primary" >
-                                <span id="icon-0-1-0-0" class="glyphicon glyphicon-plus"></span>
-                            </button>
-                        </span>
-                    </div>
-                </td>
+            </thead>
+            <tbody>
+                <tr id="row-0-1-0">
 
-                <!-- Elements Description, related to elements -->
-                <td id="col-0-1-0-1" rel="0-1-0-0" rowspan="1">
-                    <div class="input-group">
-                        <textarea id="input-0-1-0-1" type="text" class="form-control" list="element-description"/></textarea>
-                        <datalist id="element-description">
-                        </datalist>
-                    </div>
-                </td>
+                    <!-- Elements -->
+                    <td id="col-0-1-0-0" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <input id="input-0-1-0-0"  hasBtn="true" type="text" class="form-control" list="element"/>
+                            <datalist class="dl-element"></datalist>
+                            <button id="btn-0-1-0-0" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Failure Mode -->
-                <td id="col-0-1-0-2" rowspan="1">
-                    <div class="input-group">
-                        <input id="input-0-1-0-2" type="text" class="form-control" list="failure-mode"/>
-                        <datalist id="failure-mode">
-                        </datalist>
-                        <span class="input-group-btn">
-                            <button id="btn-0-1-0-2" state="+" zone="0-1" type="button" class="btn btn-primary" >
-                                <span id="icon-0-1-0-2" class="glyphicon glyphicon-plus"></span>
-                            </button>
-                        </span>
-                    </div>
-                </td>
+                    <!-- Elements Description, related to elements -->
+                    <td id="col-0-1-0-1" rel="0-1-0-0" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <textarea id="input-0-1-0-1" type="text" class="form-control" list="element-description"/></textarea>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Failure Effect global,  related to failure mode -->
-                <td id="col-0-1-0-3" rel="0-1-0-2" rowspan="1">
-                    <div class="input-group">
-                        <input id="input-0-1-0-3" type="text" class="form-control" list="effect-global"/>
-                        <datalist id="effect-global">
-                        </datalist>
-                    </div>
-                </td>
+                    <!-- Failure Mode -->
+                    <td id="col-0-1-0-2" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <input id="input-0-1-0-2" hasBtn="true" type="text" class="form-control" list="failure-mode"/>
+                            <datalist class="dl-failure-mode"></datalist>
+                            <button id="btn-0-1-0-2" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Failure Effect local,  related to failure mode -->
-                <td id="col-0-1-0-4" rel="0-1-0-2" rowspan="1">
-                    <div class="input-group">
-                        <input id="input-0-1-0-4" type="text" class="form-control"  list="effect-local"/>
-                        <datalist id="effect-local">
-                        </datalist>
-                    </div>
-                </td>
+                    <!-- Failure Effect global,  related to failure mode -->
+                    <td id="col-0-1-0-3" rel="0-1-0-2" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <input id="input-0-1-0-3" type="text" class="form-control" list="effect-global"/>
+                            <datalist class="dl-effect-global"></datalist>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Severity -->
-                <td id="col-0-1-0-5" rel="0-1-0-2" rowspan="1">
-                    <div class="input-group">
-                        <input id="input-0-1-0-5" type="text" class="form-control" list="severity"/>
-                        <datalist id="severity">
-                        </datalist>
-                    </div>
-                </td>
+                    <!-- Failure Effect local,  related to failure mode -->
+                    <td id="col-0-1-0-4" rel="0-1-0-2" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <input id="input-0-1-0-4" type="text" class="form-control"  list="effect-local"/>
+                            <datalist class="dl-effect-local"></datalist>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Occurrence Rate -->
-                <td id="col-0-1-0-6" rel="0-1-0-2" rowspan="1">
-                    <div class="input-group">
-                        <input id="input-0-1-0-6" type="text" class="form-control" list="occurrence"/>
-                        <datalist id="occurrence">
-                        </datalist>
-                    </div>
-                </td>
+                    <!-- Risk Level -->
+                    <td id="col-0-1-0-5" rel="0-1-0-2" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <input id="input-0-1-0-5" type="text" class="form-control" list="severity"/>
+                            <datalist class="dl-risk-level"></datalist>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Failure Detection -->
-                <td id="col-0-1-0-7" rel="0-1-0-2" rowspan="1">
-                    <div class="input-group">
-                        <input id="input-0-1-0-7" type="text" class="form-control" list="detection"/>
-                        <datalist id="detection">
-                        </datalist>
-                    </div>
-                </td>
+                    <!-- Countermeasures -->
+                    <td id="col-0-1-0-6" rel="0-1-0-2" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <input id="input-0-1-0-6" type="text" class="form-control" list="occurrence"/>
+                            <datalist class="dl-countermeasures"></datalist>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Mitigations Action -->
-                <td id="col-0-1-0-8" rel="0-1-0-2" rowspan="1">
-                    <div class="input-group">
-                        <input id="input-0-1-0-8" type="text" class="form-control" list="mitigate"/>
-                        <datalist id="mitigate">
-                        </datalist>
-                    </div>
-                </td>
+                    <!-- Requirements -->
+                    <td id="col-0-1-0-7" rel="0-1-0-2" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <input id="input-0-1-0-7" type="text" class="form-control" list="detection"/>
+                            <datalist class="dl-requirements"></datalist>
+                        <!-- </div> -->
+                    </td>
 
-                <!-- Notes -->
-                <td id="col-0-1-0-9" rel="0-1-0-2" rowspan="1">
-                    <div class="input-group">
-                        <textarea id="input-0-1-0-9" type="text" class="form-control" list="notes"/></textarea>
-                        <datalist id="notes">
-                        </datalist>
-                    </div>
-                </td>
+                    <!-- Notes -->
+                    <td id="col-0-1-0-8" rel="0-1-0-2" rowspan="1">
+                        <!-- <div class="input-group"> -->
+                            <textarea id="input-0-1-0-9" type="text" class="form-control" list="notes"/></textarea>
+                        <!-- </div> -->
+                    </td>
 
-            </tr>
-        </tbody>
-    </table>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
+    <!-- =================================================================== -->
+    <br/>
     <!-- =================================================================== -->
 
     <span class="input-group-btn">
-        <button id="remove-zone-0" type="button" class="btn btn-primary" >
+        <button id="remove-zone-0" type="button" class="btn-control" >
             Remove a zone
         </button>
     </span>
-
     <!-- =================================================================== -->
 
 </body>

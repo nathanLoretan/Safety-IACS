@@ -1,6 +1,6 @@
 // Initial state of the table
 const nbrColType1 = 4;
-const nbrColType2 = 10;
+const nbrColType2 = 9;
 var   nbrZone = 1;
 
 var zone_list = ["test1", "test2", "test3", "test4", "test5"];
@@ -12,10 +12,9 @@ var element_description_list = [];
 var failure_mode_list = [];
 var effect_global_list = [];
 var effect_local_list = [];
-var severity_list = [];
-var occurrence_list = [];
-var detection_list = [];
-var mitigate_list = [];
+var risk_Level_list = [];
+var countermeasures_list = [];
+var requirements_list = [];
 var notes_list = [];
 
 function cellHTML(zone, row, col) {
@@ -272,62 +271,47 @@ function addNewCell(table, zone, row, col, selectedRow) {
 
 function fillDatalist() {
 
-    document.getElementById('zone').innerHTML = '';
-    document.getElementById('zone-description').innerHTML = '';
-    document.getElementById('conn').innerHTML = '';
-    document.getElementById('conn-description').innerHTML = '';
-    document.getElementById('element').innerHTML = '';
-    document.getElementById('element-description').innerHTML = '';
-    document.getElementById('failure-mode').innerHTML = '';
-    document.getElementById('effect-global').innerHTML = '';
-    document.getElementById('effect-local').innerHTML = '';
-    document.getElementById('severity').innerHTML = '';
-    document.getElementById('occurrence').innerHTML = '';
-    document.getElementById('detection').innerHTML = '';
-    document.getElementById('mitigate').innerHTML = '';
-    document.getElementById('notes').innerHTML = '';
+    // https://stackoverflow.com/questions/33310969/input-with-datalist-grouping
+
+    document.getElementsByClassName('dl-zone').innerHTML = '';
+    document.getElementsByClassName('dl-conn').innerHTML = '';
+    document.getElementsByClassName('dl-element').innerHTML = '';
+    document.getElementsByClassName('dl-failure-mode').innerHTML = '';
+    document.getElementsByClassName('dl-effect-global').innerHTML = '';
+    document.getElementsByClassName('dl-effect-local').innerHTML = '';
+    document.getElementsByClassName('dl-risk-level').innerHTML = '';
+    document.getElementsByClassName('dl-countermeasures').innerHTML = '';
+    document.getElementsByClassName('dl-requirements').innerHTML = '';
 
     for(i = 0; i < zone_list.length; i++)
-        document.getElementById('zone').innerHTML += '<option value="'+zone_list[i]+'" />';
-
-    for(i = 0; i < zone_description_list.length; i++)
-        document.getElementById('zone-description').innerHTML += '<option value="'+zone_description_list[i]+'" />';
+        document.getElementsByClassName('dl-zone').innerHTML += '<option value="'+zone_list[i]+'" />';
 
     for(i = 0; i < conn_list.length; i++)
-        document.getElementById('conn').innerHTML += '<option value="'+conn_list[i]+'" />';
-
-    for(i = 0; i < conn_description_list.length; i++)
-        document.getElementById('conn-description').innerHTML += '<option value="'+conn_description_list[i]+'" />';
+        document.getElementsByClassName('dl-conn').innerHTML += '<option value="'+conn_list[i]+'" />';
 
     for(i = 0; i < element_list.length; i++)
-        document.getElementById('element').innerHTML += '<option value="'+element_list[i]+'" />';
-
-    for(i = 0; i < element_description_list.length; i++)
-        document.getElementById('element-description').innerHTML += '<option value="'+element_description_list[i]+'" />';
+        document.getElementsByClassName('dl-element').innerHTML += '<option value="'+element_list[i]+'" />';
 
     for(i = 0; i < failure_mode_list.length; i++)
-        document.getElementById('failure-mode').innerHTML += '<option value="'+failure_mode_list[i]+'" />';
+        document.getElementsByClassName('dl-failure-mode').innerHTML += '<option value="'+failure_mode_list[i]+'" />';
 
     for(i = 0; i < effect_global_list.length; i++)
-        document.getElementById('effect-global').innerHTML += '<option value="'+effect_global_list[i]+'" />';
+        document.getElementsByClassName('dl-effect-global').innerHTML += '<option value="'+effect_global_list[i]+'" />';
 
     for(i = 0; i < effect_local_list.length; i++)
-        document.getElementById('effect-local').innerHTML += '<option value="'+effect_local_list[i]+'" />';
+        document.getElementsByClassName('dl-effect-local').innerHTML += '<option value="'+effect_local_list[i]+'" />';
 
-    for(i = 0; i < severity_list.length; i++)
-        document.getElementById('severity').innerHTML += '<option value="'+severity_list[i]+'" />';
+    for(i = 0; i < risk_Level_list.length; i++)
+        document.getElementsByClassName('dl-risk-level').innerHTML += '<option value="'+risk_Level_list[i]+'" />';
 
-    for(i = 0; i < occurrence_list.length; i++)
-        document.getElementById('occurrence').innerHTML += '<option value="'+occurrence_list[i]+'" />';
+    for(i = 0; i < countermeasures_list.length; i++)
+        document.getElementsByClassName('dl-countermeasures').innerHTML += '<option value="'+countermeasures_list[i]+'" />';
 
-    for(i = 0; i < detection_list.length; i++)
-        document.getElementById('detection').innerHTML += '<option value="'+detection_list[i]+'" />';
-
-    for(i = 0; i < zone_list.length; i++)
-        document.getElementById('mitigate').innerHTML += '<option value="'+mitigate_list[i]+'" />';
+    for(i = 0; i < requirements_list.length; i++)
+        document.getElementsByClassName('dl-requirements').innerHTML += '<option value="'+requirements_list[i]+'" />';
 
     for(i = 0; i < notes_list.length; i++)
-        document.getElementById('notes').innerHTML += '<option value="'+notes_list[i]+'" />';
+        document.getElementsByClassName('dl-notes').innerHTML += '<option value="'+notes_list[i]+'" />';
 }
 
 $(document).ready(function() {
@@ -379,7 +363,7 @@ $(document).ready(function() {
         if(state == '+') {
 
             // Change icone + -> -
-            document.getElementById('icon-' + zone + '-' + row + '-' + col).className = "glyphicon glyphicon-minus";
+            document.getElementById('btn-' + zone + '-' + row + '-' + col).innerHTML = "-";
 
             // Change state of the button
             $(this).attr('state', '-');
@@ -522,7 +506,7 @@ $(document).ready(function() {
                nbrRow -= 1;
 
                // Change icone - -> +
-               document.getElementById('icon-' + zone + '-' + (nbrRow-1) + '-' + col).className = "glyphicon glyphicon-plus";
+               document.getElementById('btn-' + zone + '-' + (nbrRow-1) + '-' + col).innerHTML = "+";
 
                // Change state of the button
                document.getElementById('btn-' + zone + '-' + (nbrRow-1) + '-' + col).setAttribute('state', '+');
@@ -575,7 +559,7 @@ $(document).ready(function() {
                  }
 
                  // Change icone - -> +
-                 document.getElementById('icon-' + zone + '-' + (nbrRow-(n+1)) + '-' + col).className = "glyphicon glyphicon-plus";
+                 document.getElementById('btn-' + zone + '-' + (nbrRow-(n+1)) + '-' + col).innerHTML = "+";
 
                  // Change state of the button
                  document.getElementById('btn-' + zone + '-' + (nbrRow-(n+1)) + '-' + col).setAttribute('state', '+');

@@ -1,49 +1,164 @@
 /* https://css-tricks.com/pure-css-horizontal-scrolling/ */
 
-$finalHeight: 250px;
-$finalWidth: 3 * $finalHeight;
-$scrollBarHeight: 1px;
+@page { size: landscape; }
 
-::-webkit-scrollbar {
-  width: $scrollBarHeight;
-  height: $scrollBarHeight;
+/* Configure the inpector information formula --------------------------------*/
+#data {
+    overflow: hidden;
+    width: 100%;
 }
 
-::-webkit-scrollbar-button {
-  width: $scrollBarHeight;
-  height: $scrollBarHeight;
+div.text {
+    overflow: hidden;
+    width: 100%;
 }
 
-.page {
-      overflow-y: auto;
-      overflow-x: scroll;
+div.text input {
+    width: calc(100% - 110px);
+    display: inline-block;
+    float: left;
+}
+
+div.text label {
+    width: 100px;
+    display: inline-block;
+    float: left;
+}
+
+/* Configure button print and add zone ---------------------------------------*/
+#control {
+    overflow: hidden;
+    width: 100%;
+}
+
+.btn-control {
+    border: none;
+    color: white;
+    background-color: #4CAF50;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: bottom;
+    font-size: 14px;
+    height: 25px;
+}
+
+#print, #add-zone {
+    width: 49%;
+    display: inline-block;
+    float: left;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+
+/* Configure table -----------------------------------------------------------*/
+
+.table-container {
+    display: block;
+    overflow: auto;
+    width: 100%;
 }
 
 table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-        border-collapse: collapse;
-        border-spacing: 0;
-        width: 100%;
-        border: 1px solid #ddd;
+    /* Set the scoll of the table */
+    /* width: 1500px; */
+    /* height: auto;
+    width: auto; */
+
+    /* Set the border of the Table */
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+.zone-conn {
+    /* 4 col * 250 */
+    width: 1000px;
+}
+
+.el-fail {
+    /* 9 col * 250 */
+    width: 2250px;
+}
+
+/* Set height of the row */
+tr[id^="row-"] {
+    height: 60px;
+}
+
+th {
+    /* background-color: #4CAF50; */
+    /* color: white; */
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    font-size: 14px;
 }
 
 th, td {
-    padding: 8px;
-    text-align: left;
+    /* Set the border of the cell */
+    border: 1px solid black;
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    margin: 0;
+    padding: 0;
+
+    width: 500px;
 }
-input {
-    border: 0;
+
+input[id^="input-"] {
     width: 100%;
-    word-break: break-word;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    border: none;
 }
-select {
-    border: 0;
+
+textarea[id^="input-"] {
     width: 100%;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    resize: none;
+}
+
+input[hasBtn="true"] {
+    width: calc(100% - 26px);
+    /* height: 60px; */
+    display: inline-block;
+    float: left;
+
+
+    /* border: 1px solid blue; */
+}
+
+button[id^="btn"] {
+    width: 25px;
+    height: 60px;
+    display: inline-block;
+    float: left;
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    color: white;
+    background-color: #4CAF50;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: bottom;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Set font style */
+input[id^="input-"], textarea[id^="input-"] {
+    font-size: 10px;
+    text-decoration: none;
+}
+
+/* Configure remove button ---------------------------------------------------*/
+button[id^="remove-zone-"] {
+    width: 99%;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
 }
