@@ -32,31 +32,35 @@
             <label>Approved by:</label>
             <input class="formula"  type="text" name="approved-by"/>
         </div>
+        <div class="text">
+            <label>Filename:</label>
+            <input id="filename" class="formula" type="text" name="filename"/>
+        </div>
+        <div class="text">
+            <input type="file" id="fileToLoad">
+        </div>
     </div>
 
     <!-- =================================================================== -->
     <hr/>
 
     <div id="control">
-        <!-- <span class="input-group-btn"> -->
-            <button id="print" type="button" class="btn-control">
-                 <!-- class="btn btn-primary" > -->
-                Print
+            <button id="save" type="button" class="btn-control">
+                Save
             </button>
-        <!-- </span> -->
-        <!-- <span class="input-group-btn"> -->
+            <button id="open" type="button" class="btn-control" >
+                Open
+            </button>
             <button id="add-zone" type="button" class="btn-control" >
                 Add a zone
             </button>
-        <!-- </span> -->
     </div>
 
-    <!-- =================================================================== -->
-    <hr/>
-    <br/>
-    <!-- =================================================================== -->
-
-    <div class="table-container">
+    <div class="table-container" id="table-0-0">
+        <!-- =============================================================== -->
+        <hr/>
+        <br/>
+        <!-- =============================================================== -->
         <table id="zone-0-0" class="zone-conn">
             <thead>
                 <tr>
@@ -71,44 +75,35 @@
 
                     <!-- Zone -->
                     <td id="col-0-0-0-0" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <input id="input-0-0-0-0" type="text" class="form-control" list="zone"/>
-                            <datalist class="dl-zone"></datalist>
-                        <!-- </div> -->
+                        <input id="input-0-0-0-0" type="text" class="form-control" list="zone"/>
+                        <datalist class="dl-zone"></datalist>
                     </td>
 
                     <!-- Zone Description -->
                     <td id="col-0-0-0-1" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <textarea id="input-0-0-0-1" type="text" class="form-control" list="zone-description"/></textarea>
-                        <!-- </div> -->
+                        <textarea id="input-0-0-0-1" type="text" class="form-control" list="zone-description"/></textarea>
                     </td>
 
                     <!-- Connection -->
                     <td id="col-0-0-0-2" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <input id="input-0-0-0-2" hasBtn="true" type="text" class="form-control" list="conn"/>
-                            <datalist class="dl-conn"></datalist>
-                            <button id="btn-0-0-0-2" state="+" zone="0-0" type="button" class="btn btn-primary">+</button>
-                        <!-- </div> -->
+                        <input id="input-0-0-0-2" hasBtn="true" type="text" class="form-control" list="conn"/>
+                        <datalist class="dl-conn"></datalist>
+                        <button id="btn-0-0-0-2" state="+" zone="0-0" type="button" class="btn btn-primary">+</button>
                     </td>
 
                     <!-- Connection Description -->
                     <td id="col-0-0-0-3" rel="0-0-0-2" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <textarea id="input-0-0-0-3" type="text" class="form-control" list="conn-description"/></textarea>
-                        <!-- </div> -->
+                        <textarea id="input-0-0-0-3" type="text" class="form-control" list="conn-description"/></textarea>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- =================================================================== -->
-    <br/>
-    <!-- =================================================================== -->
-
-    <div class="table-container">
+    <div class="table-container" id="table-0-1">
+        <!-- =============================================================== -->
+        <br/>
+        <!-- =============================================================== -->
         <table id="zone-0-1" class="el-fail">
             <thead>
                 <tr>
@@ -132,90 +127,71 @@
 
                     <!-- Elements -->
                     <td id="col-0-1-0-0" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <input id="input-0-1-0-0"  hasBtn="true" type="text" class="form-control" list="element"/>
-                            <datalist class="dl-element"></datalist>
-                            <button id="btn-0-1-0-0" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
-                        <!-- </div> -->
+                        <input id="input-0-1-0-0"  hasBtn="true" type="text" class="form-control" list="element"/>
+                        <datalist class="dl-element"></datalist>
+                        <button id="btn-0-1-0-0" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
                     </td>
 
                     <!-- Elements Description, related to elements -->
                     <td id="col-0-1-0-1" rel="0-1-0-0" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <textarea id="input-0-1-0-1" type="text" class="form-control" list="element-description"/></textarea>
-                        <!-- </div> -->
+                        <textarea id="input-0-1-0-1" type="text" class="form-control" list="element-description"/></textarea>
                     </td>
 
                     <!-- Failure Mode -->
                     <td id="col-0-1-0-2" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <input id="input-0-1-0-2" hasBtn="true" type="text" class="form-control" list="failure-mode"/>
-                            <datalist class="dl-failure-mode"></datalist>
-                            <button id="btn-0-1-0-2" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
-                        <!-- </div> -->
+                        <input id="input-0-1-0-2" hasBtn="true" type="text" class="form-control" list="failure-mode"/>
+                        <datalist class="dl-failure-mode"></datalist>
+                        <button id="btn-0-1-0-2" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
                     </td>
 
                     <!-- Failure Effect global,  related to failure mode -->
                     <td id="col-0-1-0-3" rel="0-1-0-2" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <input id="input-0-1-0-3" type="text" class="form-control" list="effect-global"/>
-                            <datalist class="dl-effect-global"></datalist>
-                        <!-- </div> -->
+                        <input id="input-0-1-0-3" type="text" class="form-control" list="effect-global"/>
+                        <datalist class="dl-effect-global"></datalist>
                     </td>
 
                     <!-- Failure Effect local,  related to failure mode -->
                     <td id="col-0-1-0-4" rel="0-1-0-2" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <input id="input-0-1-0-4" type="text" class="form-control"  list="effect-local"/>
-                            <datalist class="dl-effect-local"></datalist>
-                        <!-- </div> -->
+                        <input id="input-0-1-0-4" type="text" class="form-control"  list="effect-local"/>
+                        <datalist class="dl-effect-local"></datalist>
                     </td>
 
                     <!-- Risk Level -->
                     <td id="col-0-1-0-5" rel="0-1-0-2" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <input id="input-0-1-0-5" type="text" class="form-control" list="severity"/>
-                            <datalist class="dl-risk-level"></datalist>
-                        <!-- </div> -->
+                        <input id="input-0-1-0-5" type="text" class="form-control" list="severity"/>
+                        <datalist class="dl-risk-level"></datalist>
                     </td>
 
                     <!-- Countermeasures -->
                     <td id="col-0-1-0-6" rel="0-1-0-2" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <input id="input-0-1-0-6" type="text" class="form-control" list="occurrence"/>
-                            <datalist class="dl-countermeasures"></datalist>
-                        <!-- </div> -->
+                        <input id="input-0-1-0-6" type="text" class="form-control" list="occurrence"/>
+                        <datalist class="dl-countermeasures"></datalist>
                     </td>
 
                     <!-- Requirements -->
                     <td id="col-0-1-0-7" rel="0-1-0-2" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <input id="input-0-1-0-7" type="text" class="form-control" list="detection"/>
-                            <datalist class="dl-requirements"></datalist>
-                        <!-- </div> -->
+                        <input id="input-0-1-0-7" type="text" class="form-control" list="detection"/>
+                        <datalist class="dl-requirements"></datalist>
                     </td>
 
                     <!-- Notes -->
                     <td id="col-0-1-0-8" rel="0-1-0-2" rowspan="1">
-                        <!-- <div class="input-group"> -->
-                            <textarea id="input-0-1-0-9" type="text" class="form-control" list="notes"/></textarea>
-                        <!-- </div> -->
+                        <textarea id="input-0-1-0-8" type="text" class="form-control" list="notes"/></textarea>
                     </td>
 
                 </tr>
             </tbody>
         </table>
+        <!-- =============================================================== -->
+        <br/>
+        <!-- =============================================================== -->
     </div>
 
-    <!-- =================================================================== -->
-    <br/>
-    <!-- =================================================================== -->
 
-    <span class="input-group-btn">
-        <button id="remove-zone-0" type="button" class="btn-control" >
-            Remove a zone
-        </button>
-    </span>
+    <button id="remove-zone-0" type="button" class="btn-control" >
+        Remove a zone
+    </button>
+
     <!-- =================================================================== -->
 
 </body>

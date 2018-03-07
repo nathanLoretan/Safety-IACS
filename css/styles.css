@@ -1,5 +1,11 @@
 /* https://css-tricks.com/pure-css-horizontal-scrolling/ */
 
+/*
+1. input align text above
+2. font style
+3. save file
+*/
+
 @page { size: landscape; }
 
 /* Configure the inpector information formula --------------------------------*/
@@ -42,8 +48,8 @@ div.text label {
     height: 25px;
 }
 
-#print, #add-zone {
-    width: 49%;
+#print, #save, #open, #add-zone {
+    width: 32%;
     display: inline-block;
     float: left;
     margin-left: 0.5%;
@@ -81,7 +87,7 @@ table {
 
 /* Set height of the row */
 tr[id^="row-"] {
-    height: 60px;
+    height: 50px;
 }
 
 th {
@@ -107,7 +113,7 @@ th, td {
 
 input[id^="input-"] {
     width: 100%;
-    height: 60px;
+    /* height: 60px; */
     margin: 0;
     padding: 0;
     border: none;
@@ -115,11 +121,12 @@ input[id^="input-"] {
 
 textarea[id^="input-"] {
     width: 100%;
-    height: 60px;
+    /* height: 60px; */
     margin: 0;
     padding: 0;
     border: none;
     resize: none;
+    overflow: auto;
 }
 
 input[hasBtn="true"] {
@@ -134,7 +141,7 @@ input[hasBtn="true"] {
 
 button[id^="btn"] {
     width: 25px;
-    height: 60px;
+    height: 50px;
     display: inline-block;
     float: left;
     margin: 0;

@@ -18,24 +18,12 @@ var requirements_list = [];
 var notes_list = [];
 
 function cellHTML(zone, row, col) {
-    return  '<div class="input-group">' +
-                '<input id="input-' + zone + '-' + (row+1) + '-' + col +
-                     '" type="text" class="form-control"/>' +
-                '<span class="input-group-btn">' +
-                    '<button id="btn-' + zone + '-' + (row+1) + '-' + col +
-                          '" state="+" zone="' + zone +
-                          '" type="button" class="btn btn-primary">' +
-                        '<span id="icon-' + zone + '-' + (row+1)  + '-' + col + '" class="glyphicon glyphicon-plus"></span>'+
-                    '</button>' +
-                '</span>' +
-             '</div>';
+    return  '<input id="input-'+zone+'-'+(row+1)+'-'+col+'" hasBtn="true" type="text" class="form-control"/>' +
+            '<button id="btn-'+zone+'-'+(row+1)+'-'+col+'" state="+" zone="'+zone+'" type="button" class="btn btn-primary">+</button>'
 }
 
 function relHTML(zone, row, col) {
-    return  '<div class="input-group">' +
-                '<input id="input-' + zone + '-' + (row+1) + '-' + col +
-                     '" type="text" class="form-control"/>' +
-             '</div>';
+    return  '<input id="input-'+zone+'-'+(row+1)+'-'+col+'" type="text" class="form-control"/>'
 }
 
 function zoneHTML(zone) {
@@ -43,194 +31,142 @@ function zoneHTML(zone) {
     var zoneTable1 = zone + '-0';
     var zoneTable2 = zone + '-1';
 
-    return  '' +
-    '<table id="zone-' + zoneTable1 + '">' +
-        '<thead>' +
-            '<tr>' +
-                '<th>Zone</th>' +
-                '<th>Zone Description</th>' +
-                '<th>Connection</th>' +
-                '<th>Connection Description</th>' +
-            '</tr>' +
-        '</thead>' +
-        '<tbody>' +
-            '<tr id="row-' + zoneTable1 + '-0">' +
+    return '' +
+    '<div class="table-container" id="table-' + zoneTable1 + '">' +
+        '<!-- =================================================================== -->' +
+        '<hr/>' +
+        '<br/>' +
+        '<!-- =================================================================== -->' +
+        '<table id="zone-' + zoneTable1 + '" class="zone-conn">' +
+            '<thead>' +
+                '<tr>' +
+                    '<th>Zone</th>' +
+                    '<th>Zone Description</th>' +
+                    '<th>Connection</th>' +
+                    '<th>Connection Description</th>' +
+                '</tr>' +
+            '</thead>' +
+            '<tbody>' +
+                '<tr id="row-' + zoneTable1 + '-0">' +
 
-                '<!-- Zone -->' +
-                '<td id="col-' + zoneTable1 + '-0-0" rowspan="1">' +
-                    '<div class="input-group">' +
+                    '<!-- Zone -->' +
+                    '<td id="col-' + zoneTable1 + '-0-0" rowspan="1">' +
                         '<input id="input-' + zoneTable1 + '-0-0" type="text" class="form-control" list="zone"/>' +
-                        '<datalist id="zone">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
+                        '<datalist id="zone"></datalist>' +
+                    '</td>' +
 
-                '<!-- Elements Description -->' +
-                '<td id="col-' + zoneTable1 + '-0-1" rowspan="1">' +
-                    '<div class="input-group">' +
+                    '<!-- Elements Description -->' +
+                    '<td id="col-' + zoneTable1 + '-0-1" rowspan="1">' +
                         '<textarea id="input-' + zoneTable1 + '-0-1" type="text" class="form-control" list="zone-description"/></textarea>' +
-                        '<datalist id="zone-description">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
+                    '</td>' +
 
-                '<!-- Connection -->' +
-                '<td id="col-' + zoneTable1 + '-0-2" rowspan="1">' +
-                    '<div class="input-group">' +
-                        '<input id="input-' + zoneTable1 + '-0-2" type="text" class="form-control" list="conn"/>' +
-                        '<datalist id="conn">' +
-                        '</datalist>' +
-                        '<span class="input-group-btn">' +
-                            '<button id="btn-' + zoneTable1 + '-0-2" state="+" zone="' + zoneTable1 + '" type="button" class="btn btn-primary" >' +
-                                '<span id="icon-' + zoneTable1 + '-0-2" class="glyphicon glyphicon-plus"></span>' +
-                            '</button>' +
-                        '</span>' +
-                    '</div>' +
-                '</td>' +
+                    '<!-- Connection -->' +
+                    '<td id="col-' + zoneTable1 + '-0-2" rowspan="1">' +
+                        '<input id="input-' + zoneTable1 + '-0-2" hasBtn="true" type="text" class="form-control" list="conn"/>' +
+                        '<datalist id="conn"></datalist>' +
+                        '<button id="btn-' + zoneTable1 + '-0-2" state="+" zone="' + zoneTable1 + '" type="button" class="btn btn-primary">+</button>' +
+                    '</td>' +
 
-                '<!-- Connection Description -->' +
-                '<td id="col-' + zoneTable1 + '-0-3" rel="' + zoneTable1 + '-0-2" rowspan="1">' +
-                    '<div class="input-group">' +
+                    '<!-- Connection Description -->' +
+                    '<td id="col-' + zoneTable1 + '-0-3" rel="' + zoneTable1 + '-0-2" rowspan="1">' +
                         '<textarea id="input-' + zoneTable1 + '-0-3" type="text" class="form-control" list="conn-description"/></textarea>' +
-                        '<datalist id="conn-description">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
-            '</tr>' +
-        '</tbody>' +
-    '</table>' +
+                    '</td>' +
+                '</tr>' +
+            '</tbody>' +
+        '</table>' +
+    '</div>' +
 
-    '<table id="zone-' + zoneTable2 + '">' +
-        '<thead>' +
-            '<tr>' +
-                '<th rowspan="2">Elements</th>' +
-                '<th rowspan="2">Elements Description</th>' +
-                '<th rowspan="2">Failure Mode</th>' +
-                '<th colspan="2">Failure Effect</th>' +
-                '<th rowspan="2">Severity</th>' +
-                '<th rowspan="2">Occurence Rate</th>' +
-                '<th rowspan="2">Failure Detection</th>' +
-                '<th rowspan="2">Mitigations Action</th>' +
-                '<th rowspan="2">Notes</th>' +
-            '</tr>' +
-            '<tr>' +
-                '<th>Global</th>' +
-                '<th>Local</th>' +
-            '</tr>' +
+    '<div class="table-container"id="table-' + zoneTable2 + '">' +
+        '<!-- =================================================================== -->' +
+        '<br/>' +
+        '<!-- =================================================================== -->' +
+        '<table id="zone-' + zoneTable2 + '" class="el-fail">' +
+            '<thead>' +
+                '<tr>' +
+                    '<th rowspan="2">Elements</th>' +
+                    '<th rowspan="2">Elements Description</th>' +
+                    '<th rowspan="2">Failure Mode</th>' +
+                    '<th colspan="2">Failure Effect</th>' +
+                    '<th rowspan="2">Risk Level</th>' +
+                    '<th rowspan="2">Countermeasures</th>' +
+                    '<th rowspan="2">Requirements</th>' +
+                    '<th rowspan="2">Notes</th>' +
+                '</tr>' +
+                '<tr>' +
+                    '<th>Global</th>' +
+                    '<th>Local</th>' +
+                '</tr>' +
 
-        '</thead>' +
-        '<tbody>' +
-            '<tr id="row-' + zoneTable2 + '-0">' +
+            '</thead>' +
+            '<tbody>' +
+                '<tr id="row-' + zoneTable2 + '-0">' +
 
-                '<!-- Elements -->' +
-                '<td id="col-' + zoneTable2 + '-0-0" rowspan="1">' +
-                    '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-0" type="text" class="form-control" list="element"/>' +
-                        '<datalist id="element">' +
-                        '</datalist>' +
-                        '<span class="input-group-btn">' +
-                            '<button id="btn-' + zoneTable2 + '-0-0" state="+" zone="' + zoneTable2 + '" type="button" class="btn btn-primary" >' +
-                                '<span id="icon-' + zoneTable2 + '-0-0" class="glyphicon glyphicon-plus"></span>' +
-                            '</button>' +
-                        '</span>' +
-                    '</div>' +
-                '</td>' +
+                    '<!-- Elements -->' +
+                    '<td id="col-' + zoneTable2 + '-0-0" rowspan="1">' +
+                        '<input id="input-' + zoneTable2 + '-0-0" hasBtn="true" type="text" class="form-control" list="element"/>' +
+                        '<datalist id="element"></datalist>' +
+                        '<button id="btn-' + zoneTable2 + '-0-0" state="+" zone="' + zoneTable2 + '" type="button" class="btn btn-primary" >+</button>' +
+                    '</td>' +
 
-                '<!-- Elements Description, related to elements -->' +
-                '<td id="col-' + zoneTable2 + '-0-1" rel="' + zoneTable2 + '-0-0" rowspan="1">' +
-                    '<div class="input-group">' +
-                        '<textarea id="input-' + zoneTable2 + '-0-1" type="text" class="form-control" list="element-description"/></textarea>' +
-                        '<datalist id="element-description">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
+                    '<!-- Elements Description, related to elements -->' +
+                    '<td id="col-' + zoneTable2 + '-0-1" rel="' + zoneTable2 + '-0-0" rowspan="1">' +
+                            '<textarea id="input-' + zoneTable2 + '-0-1" type="text" class="form-control" list="element-description"/></textarea>' +
+                    '</td>' +
 
-                '<!-- Failure Mode -->' +
-                '<td id="col-' + zoneTable2 + '-0-2" rowspan="1">' +
-                    '<div class="input-group">' +
+                    '<!-- Failure Mode -->' +
+                    '<td id="col-' + zoneTable2 + '-0-2" rowspan="1">' +
                         '<input id="input-' + zoneTable2 + '-0-2" type="text" class="form-control" list="failure-mode"/>' +
-                        '<datalist id="failure-mode">' +
-                        '</datalist>' +
-                        '<span class="input-group-btn">' +
-                            '<button id="btn-' + zoneTable2 + '-0-2" state="+" zone="' + zoneTable2 + '" type="button" class="btn btn-primary" >' +
-                                '<span id="icon-' + zoneTable2 + '-0-2" class="glyphicon glyphicon-plus"></span>' +
-                            '</button>' +
-                        '</span>' +
-                    '</div>' +
-                '</td>' +
+                        '<datalist id="failure-mode"></datalist>' +
+                        '<button id="btn-' + zoneTable2 + '-0-2" hasBtn="true" state="+" zone="' + zoneTable2 + '" type="button" class="btn btn-primary" >+</button>' +
+                    '</td>' +
 
-                '<!-- Failure Effect global,  related to failure mode -->' +
-                '<td id="col-' + zoneTable2 + '-0-3" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                    '<div class="input-group">' +
+                    '<!-- Failure Effect global,  related to failure mode -->' +
+                    '<td id="col-' + zoneTable2 + '-0-3" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                         '<input id="input-' + zoneTable2 + '-0-3" type="text" class="form-control" list="effect-global"/>' +
-                        '<datalist id="effect-global">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
+                        '<datalist id="effect-global"></datalist>' +
+                    '</td>' +
 
-                '<!-- Failure Effect local,  related to failure mode -->' +
-                '<td id="col-' + zoneTable2 + '-0-4" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                    '<div class="input-group">' +
+                    '<!-- Failure Effect local,  related to failure mode -->' +
+                    '<td id="col-' + zoneTable2 + '-0-4" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                         '<input id="input-' + zoneTable2 + '-0-4" type="text" class="form-control" list="effect-local"/>' +
-                        '<datalist id="effect-local">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
+                        '<datalist id="effect-local"></datalist>' +
+                    '</td>' +
 
-                '<!-- Severity -->' +
-                '<td id="col-' + zoneTable2 + '-0-5" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                    '<div class="input-group">' +
+                    '<!-- Risk Level -->' +
+                    '<td id="col-' + zoneTable2 + '-0-5" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                         '<input id="input-' + zoneTable2 + '-0-5" type="text" class="form-control" list="severity"/>' +
-                        '<datalist id="severity">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
+                        '<datalist id="severity"></datalist>' +
+                    '</td>' +
 
-                '<!-- Occurence Rate -->' +
-                '<td id="col-' + zoneTable2 + '-0-6" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                    '<div class="input-group">' +
+                    '<!-- Countermeasures -->' +
+                    '<td id="col-' + zoneTable2 + '-0-6" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                         '<input id="input-' + zoneTable2 + '-0-6" type="text" class="form-control" list="occurrence"/>' +
-                        '<datalist id="occurrence">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
+                        '<datalist id="occurrence"></datalist>' +
+                    '</td>' +
 
-                '<!-- Failure Detection -->' +
-                '<td id="col-' + zoneTable2 + '-0-7" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                    '<div class="input-group">' +
+                    '<!-- Requirements -->' +
+                    '<td id="col-' + zoneTable2 + '-0-7" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
                         '<input id="input-' + zoneTable2 + '-0-7" type="text" class="form-control" list="detection"/>' +
-                        '<datalist id="detection">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
+                        '<datalist id="detection"></datalist>' +
+                    '</td>' +
 
-                '<!-- Mitigations Action -->' +
-                '<td id="col-' + zoneTable2 + '-0-8" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                    '<div class="input-group">' +
-                        '<input id="input-' + zoneTable2 + '-0-8" type="text" class="form-control" list="mitigate"/>' +
-                        '<datalist id="mitigate">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
+                    '<!-- Notes -->' +
+                    '<td id="col-' + zoneTable2 + '-0-8" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
+                        '<textarea id="input-' + zoneTable2 + '-0-8" type="text" class="form-control" list="notes"/></textarea>' +
+                    '</td>' +
 
-                '<!-- Notes -->' +
-                '<td id="col-' + zoneTable2 + '-0-9" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                    '<div class="input-group">' +
-                        '<textarea id="input-' + zoneTable2 + '-0-9" type="text" class="form-control" list="notes"/></textarea>' +
-                        '<datalist id="notes">' +
-                        '</datalist>' +
-                    '</div>' +
-                '</td>' +
+                '</tr>' +
+            '</tbody>' +
+        '</table>' +
+        '<!-- =================================================================== -->' +
+        '<br/>' +
+        '<!-- =================================================================== -->' +
+    '</div>' +
 
-            '</tr>' +
-        '</tbody>' +
-    '</table>' +
 
-    '<span class="input-group-btn">' +
-        '<button id="remove-zone-' + zone + '" type="button" class="btn btn-primary" >' +
-            'Remove a zone' +
-        '</button>' +
-    '</span>'
+    '<button id="remove-zone-' + zone + '" type="button" class="btn-control" >' +
+        'Remove a zone' +
+    '</button>'
 }
 
 function addNewCell(table, zone, row, col, selectedRow) {
@@ -264,6 +200,97 @@ function addNewCell(table, zone, row, col, selectedRow) {
             // Insert the new cell at the last position
             else if(c == table.rows["row-" + zone + '-' + (row+1)].cells.length-1) {
                 return selectedRow.insertCell(-1);
+            }
+        }
+    }
+}
+
+function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
+
+    // Create a new row or select the last existing one
+    if(row+1 == nbrRow) {
+
+        // Add a new row in the table
+        var selectedRow = table.insertRow(table.rows.length);
+        nbrRow += 1;
+
+        // Set the id of the row
+        selectedRow.id = "row-" + zone + '-' + (row + 1);
+    }
+    else {
+        selectedRow = table.rows["row-" + zone + '-' + (row+1)];
+    }
+
+    // Add the new cell in the table
+    for (i = 0; i < nbrCol; i++) {
+
+        if(i == col) {
+
+            // Get the number of cell merged together
+            rowspan = table.rows["row-" + zone + '-' + row].cells["col-" + zone + '-' + row + '-' + col].rowSpan;
+
+            // If some cell are merged together
+            if(rowspan != 1) {
+
+                // Save the number of merge row
+                table.rows["row-" + zone + '-' + row].cells["col-" + zone + '-' + row + '-' + col].rowSpan = 1;
+                $('td[rel="' + zone + '-' + row + '-'+ col + '"]').attr('rowSpan', 1);
+
+                // Create and insert the new cell in the right place
+                var cell = addNewCell(table, zone, row, col, selectedRow);
+
+                cell.id = "col-" + zone + '-' + (row+1) + '-'+ col;
+                cell.rowSpan = rowspan-1;
+                cell.innerHTML = cellHTML(zone, row, col);
+
+                // Create the new cells for the related columns
+                for(x = 0; x < rel.length; x++) {
+
+                    var relId  = rel[x].id;
+                    var relRow = row;
+                    var relCol = parseInt(relId.substring(10, relId.length));
+
+                    cell = addNewCell(table, zone, relRow, relCol, selectedRow);
+
+                    cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
+                    cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
+                    cell.rowSpan = rowspan-1;
+                    cell.innerHTML =  relHTML(zone, relRow, relCol);
+                }
+            }
+            else {
+                // Create and insert the new cell in the right place
+                var cell = addNewCell(table, zone, row, col, selectedRow);
+
+                cell.id = "col-" + zone + '-' + (row+1) + '-'+ col;
+                cell.rowSpan = 1;
+                cell.innerHTML = cellHTML(zone, row, col);
+
+                // Create the new cells for the related columns
+                for(x = 0; x < rel.length; x++) {
+
+                    var relId  = rel[x].id;
+                    var relRow = row;
+                    var relCol = parseInt(relId.substring(10, relId.length));
+
+                    cell = addNewCell(table, zone, relRow, relCol, selectedRow);
+
+                    cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
+                    cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
+                    cell.rowSpan = 1;
+                    cell.innerHTML =  relHTML(zone, relRow, relCol);
+                }
+            }
+        }
+        else {
+            // Search the last above cell to merge with new new one
+            var n = 1
+            while(typeof table.rows["row-" + zone + '-' + (nbrRow-n)].cells["col-" + zone + '-' + (nbrRow-n) + '-' + i] == 'undefined') {
+                n += 1;
+            }
+
+            if(nbrRow-n != nbrRow-1) {
+                table.rows["row-" + zone + '-' + (nbrRow-n)].cells["col-" + zone + '-' + (nbrRow-n) + '-' + i].rowSpan = n;
             }
         }
     }
@@ -330,7 +357,6 @@ $(document).ready(function() {
     *   . c = row
     *   . d = column
     */
-
     fillDatalist();
 
     $(document).on("click", 'button[id^="btn"]', function(ev) {
@@ -349,7 +375,7 @@ $(document).ready(function() {
         // Get the columns bind to this one
         var rel = $('td[rel="' + zone + '-' + row + '-' + col + '"]');
 
-        // Determine the number of column in the table
+        // Determine the number of column and row in the table
         if(type == 0) {
             var nbrCol =  nbrColType1;
             var nbrRow = table.rows.length-1;
@@ -368,93 +394,7 @@ $(document).ready(function() {
             // Change state of the button
             $(this).attr('state', '-');
 
-            // Create a new row or select the last existing one
-            if(row+1 == nbrRow) {
-
-                // Add a new row in the table
-                var selectedRow = table.insertRow(table.rows.length);
-                nbrRow += 1;
-
-                // Set the id of the row
-                selectedRow.id = "row-" + zone + '-' + (row + 1);
-            }
-            else {
-                selectedRow = table.rows["row-" + zone + '-' + (row+1)];
-            }
-
-            // Add the new cell in the table
-            for (i = 0; i < nbrCol; i++) {
-
-                if(i == col) {
-
-                    // Get the number of cell merged together
-                    rowspan = table.rows["row-" + zone + '-' + row].cells["col-" + zone + '-' + row + '-' + col].rowSpan;
-
-                    // If some cell are merged together
-                    if(rowspan != 1) {
-
-                        // Save the number of merge row
-                        table.rows["row-" + zone + '-' + row].cells["col-" + zone + '-' + row + '-' + col].rowSpan = 1;
-                        $('td[rel="' + zone + '-' + row + '-'+ col + '"]').attr('rowSpan', 1);
-
-                        // Create and insert the new cell in the right place
-                        var cell = addNewCell(table, zone, row, col, selectedRow);
-
-                        cell.id = "col-" + zone + '-' + (row+1) + '-'+ col;
-                        cell.rowSpan = rowspan-1;
-                        cell.innerHTML = cellHTML(zone, row, col);
-
-                        // Create the new cells for the related columns
-                        for(x = 0; x < rel.length; x++) {
-
-                            var relId  = rel[x].id;
-                            var relRow = row;
-                            var relCol = parseInt(relId.substring(10, relId.length));
-
-                            cell = addNewCell(table, zone, relRow, relCol, selectedRow);
-
-                            cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
-                            cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
-                            cell.rowSpan = rowspan-1;
-                            cell.innerHTML =  relHTML(zone, relRow, relCol);
-                        }
-                    }
-                    else {
-                        // Create and insert the new cell in the right place
-                        var cell = addNewCell(table, zone, row, col, selectedRow);
-
-                        cell.id = "col-" + zone + '-' + (row+1) + '-'+ col;
-                        cell.rowSpan = 1;
-                        cell.innerHTML = cellHTML(zone, row, col);
-
-                        // Create the new cells for the related columns
-                        for(x = 0; x < rel.length; x++) {
-
-                            var relId  = rel[x].id;
-                            var relRow = row;
-                            var relCol = parseInt(relId.substring(10, relId.length));
-
-                            cell = addNewCell(table, zone, relRow, relCol, selectedRow);
-
-                            cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
-                            cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
-                            cell.rowSpan = 1;
-                            cell.innerHTML =  relHTML(zone, relRow, relCol);
-                        }
-                    }
-                }
-                else {
-                    // Search the last above cell to merge with new new one
-                    var n = 1
-                    while(typeof table.rows["row-" + zone + '-' + (nbrRow-n)].cells["col-" + zone + '-' + (nbrRow-n) + '-' + i] == 'undefined') {
-                        n += 1;
-                    }
-
-                    if(nbrRow-n != nbrRow-1) {
-                        table.rows["row-" + zone + '-' + (nbrRow-n)].cells["col-" + zone + '-' + (nbrRow-n) + '-' + i].rowSpan = n;
-                    }
-                }
-            }
+            NewEntries(table, zone, row, col, rel, nbrRow, nbrCol);
         }
         // -------------------------------------------------------------
         // Remove a cell
@@ -581,26 +521,114 @@ $(document).ready(function() {
         var id    = $(this).attr('id');
         var zone  = parseInt(id.substring(12, id.length));
 
-        document.getElementById('zone-' + zone + '-' + 0).remove();
-        document.getElementById('zone-' + zone + '-' + 1).remove();
+        document.getElementById('table-' + zone + '-' + 0).remove();
+        document.getElementById('table-' + zone + '-' + 1).remove();
         document.getElementById('remove-zone-' + zone).remove();
     });
 
-    $(document).on("click", 'button[id="print"]', function(ev) {
+    // https://codepen.io/davidelrizzo/pen/cxsGb
+    // https://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/
+    $(document).on("click", 'button[id="save"]', function(ev) {
 
-        // Save the current content of the page
-        var originalDoc = document.body.innerHTML;
+        var info = "nbrZone::" + nbrZone + ";;";
 
-        // Remove some element to print the page
-        $('#print').remove();
-        $('#add-zone').remove();
-        $('button[id^="remove-zone"]').remove();
-        $('button[id^="btn"]').remove();
+        for(i = 0; i < nbrZone; i++) {
+            table1 = document.getElementById('zone-' + i + '-0');
+            table2 = document.getElementById('zone-' + i + '-1');
 
-        window.print();
+            // info += "zone-" + i + "-0::" + (table1.rows.length-1) + ";;";
+            for(r = 0; r < table1.rows.length-1; r++) {
+                for(c = 0; c < nbrColType1; c++) {
+                    info += "col-"+i+"-0-"+r+"-"+c+"::" + document.getElementById("input-"+i+"-0-"+r+"-"+c).value + ";;";
+                }
+            }
 
-        // Restore the content of the page
-        document.body.innerHTML = originalDoc;
+            // info += "zone-" + i + "-1::" + (table2.rows.length-2) + ";;";
+            for(r = 0; r < table2.rows.length-2; r++) {
+                for(c = 0; c < nbrColType2; c++) {
+                    info += "col-"+i+"-1-"+r+"-"+c+"::" + document.getElementById("input-"+i+"-1-"+r+"-"+c).value + ";;";
+                }
+            }
+        }
 
+        var textToSaveAsBlob = new Blob([info], {type:"text/plain"});
+        var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+        var fileNameToSaveAs = document.getElementById("filename").value;
+
+        if(fileNameToSaveAs == "") {
+            fileNameToSaveAs = "tool";
+        }
+
+        var downloadLink = document.createElement("a");
+        downloadLink.download = fileNameToSaveAs;
+        downloadLink.innerHTML = "Download File";
+        downloadLink.href = textToSaveAsURL;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
     });
+
+    $(document).on("click", 'button[id="open"]', function(ev) {
+
+        $('.table-container').remove();
+        $('button[id^="remove-zone"]').remove();
+
+        var fileToLoad = document.getElementById("fileToLoad").files[0];
+        var fileReader = new FileReader();
+        fileReader.onload = function(fileLoadedEvent)
+        {
+            info = fileLoadedEvent.target.result;
+            info = info.split(";;");
+
+            nbrZone = info[0].split("::")[1];
+
+            for(i = 0; i < nbrZone; i++) {
+                document.body.innerHTML += zoneHTML(i);
+            }
+
+            for(i = 1; i < info.length-1; i++) {
+
+                id = info[i].split("::")[0];
+                value = info[i].split("::")[1];
+                zone = parseInt(id.substring(4, id.length));
+                type = parseInt(id.substring(6, id.length));
+                row  = parseInt(id.substring(8, id.length));
+                col  = parseInt(id.substring(10, id.length));
+
+                table = document.getElementById('zone-' + zone + '-' + type);
+
+                if(type == 0) {
+                    var nbrCol =  nbrColType1;
+                    var nbrRow = table.rows.length-1;
+                }
+                else {
+                    var nbrCol = nbrColType2;
+                    var nbrRow = table.rows.length-2;
+                }
+
+                if(row > 0) {
+                    NewEntries(table, zone, row, col, rel, nbrRow, nbrCol);
+                }
+
+                document.getElementById('input-' + zone + '-' + type + '-' + row + '-' + col).value = value;
+            }
+        };
+        fileReader.readAsText(fileToLoad, "UTF-8");
+    });
+
+    // $(document).on("click", 'button[id="print"]', function(ev) {
+    //     // Save the current content of the page
+    //     var originalDoc = document.body.innerHTML;
+    //
+    //     // Remove some element to print the page
+    //     $('#print').remove();
+    //     $('#add-zone').remove();
+    //     $('button[id^="remove-zone"]').remove();
+    //     $('button[id^="btn"]').remove();
+    //
+    //     window.print();
+    //
+    //     // Restore the content of the page
+    //     document.body.innerHTML = originalDoc;
+    // });
 });
