@@ -10,6 +10,8 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript" src="js/table.js"></script>
 
+     <title>Safety</title>
+
 </head>
 <body>
 
@@ -61,21 +63,26 @@
         <hr/>
         <br/>
         <!-- =============================================================== -->
-        <table id="zone-0-0" class="zone-conn">
+        <table>
             <thead>
                 <tr>
                     <th>Zone</th>
                     <th>Zone Description</th>
                     <th>Connection</th>
                     <th>Connection Description</th>
+                    <th>Elements</th>
+                    <th>Elements Description</th>
+                    <th>Notes</th>
                 </tr>
             </thead>
+        </table>
+        <table id="zone-0-0">
             <tbody>
                 <tr id="row-0-0-0">
 
                     <!-- Zone -->
                     <td id="col-0-0-0-0" rowspan="1">
-                        <input id="input-0-0-0-0" type="text" class="form-control" list="zone"/>
+                        <input id="input-0-0-0-0" type="text" class="form-control" list="dl-zone"/>
                         <datalist class="dl-zone"></datalist>
                     </td>
 
@@ -86,7 +93,7 @@
 
                     <!-- Connection -->
                     <td id="col-0-0-0-2" rowspan="1">
-                        <input id="input-0-0-0-2" hasBtn="true" type="text" class="form-control" list="conn"/>
+                        <input id="input-0-0-0-2" hasBtn="true" type="text" class="form-control" list="dl-conn"/>
                         <datalist class="dl-conn"></datalist>
                         <button id="btn-0-0-0-2" state="+" zone="0-0" type="button" class="btn btn-primary">+</button>
                     </td>
@@ -94,6 +101,23 @@
                     <!-- Connection Description -->
                     <td id="col-0-0-0-3" rel="0-0-0-2" rowspan="1">
                         <textarea id="input-0-0-0-3" type="text" class="form-control" list="conn-description"/></textarea>
+                    </td>
+
+                    <!-- Elements -->
+                    <td id="col-0-0-0-4" rowspan="1">
+                        <input id="input-0-0-0-4"  hasBtn="true" type="text" class="form-control" list="dl-element"/>
+                        <datalist class="dl-element"></datalist>
+                        <button id="btn-0-0-0-4" state="+" zone="0-0" type="button" class="btn btn-primary">+</button>
+                    </td>
+
+                    <!-- Elements Description, related to elements -->
+                    <td id="col-0-0-0-5" rel="0-0-0-4" rowspan="1">
+                        <textarea id="input-0-0-0-5" type="text" class="form-control" list="element-description"/></textarea>
+                    </td>
+
+                    <!-- Notes -->
+                    <td id="col-0-0-0-6" rowspan="1">
+                        <textarea id="input-0-0-0-6" type="text" class="form-control" list="notes"/></textarea>
                     </td>
                 </tr>
             </tbody>
@@ -104,11 +128,9 @@
         <!-- =============================================================== -->
         <br/>
         <!-- =============================================================== -->
-        <table id="zone-0-1" class="el-fail">
+        <table class="header" id="zone-0" nbrFailure="1", failureIdx="1">
             <thead>
                 <tr>
-                    <th rowspan="2">Elements</th>
-                    <th rowspan="2">Elements Description</th>
                     <th rowspan="2">Failure Mode</th>
                     <th colspan="2">Failure Effect</th>
                     <th rowspan="2">Risk Level</th>
@@ -120,73 +142,61 @@
                     <th>Global</th>
                     <th>Local</th>
                 </tr>
-
             </thead>
+        </table>
+        <table id="zone-0-1">
             <tbody>
                 <tr id="row-0-1-0">
 
-                    <!-- Elements -->
-                    <td id="col-0-1-0-0" rowspan="1">
-                        <input id="input-0-1-0-0"  hasBtn="true" type="text" class="form-control" list="element"/>
-                        <datalist class="dl-element"></datalist>
-                        <button id="btn-0-1-0-0" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
-                    </td>
-
-                    <!-- Elements Description, related to elements -->
-                    <td id="col-0-1-0-1" rel="0-1-0-0" rowspan="1">
-                        <textarea id="input-0-1-0-1" type="text" class="form-control" list="element-description"/></textarea>
-                    </td>
-
                     <!-- Failure Mode -->
-                    <td id="col-0-1-0-2" rowspan="1">
-                        <input id="input-0-1-0-2" hasBtn="true" type="text" class="form-control" list="failure-mode"/>
+                    <td id="col-0-1-0-0" rowspan="1">
+                        <input id="input-0-1-0-0" hasBtn="true" type="text" class="form-control" list="dl-failure-mode"/>
                         <datalist class="dl-failure-mode"></datalist>
-                        <button id="btn-0-1-0-2" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
+                        <button id="fbtn-0-1-0-0" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
                     </td>
 
                     <!-- Failure Effect global,  related to failure mode -->
-                    <td id="col-0-1-0-3" rel="0-1-0-2" rowspan="1">
-                        <input id="input-0-1-0-3" type="text" class="form-control" list="effect-global"/>
+                    <td id="col-0-1-0-1" rowspan="1">
+                        <input id="input-0-1-0-1" type="text" class="form-control" list="dl-effect-global"/>
                         <datalist class="dl-effect-global"></datalist>
                     </td>
 
                     <!-- Failure Effect local,  related to failure mode -->
-                    <td id="col-0-1-0-4" rel="0-1-0-2" rowspan="1">
-                        <input id="input-0-1-0-4" type="text" class="form-control"  list="effect-local"/>
+                    <td id="col-0-1-0-2" rowspan="1">
+                        <input id="input-0-1-0-2" type="text" class="form-control"  list="dl-effect-local"/>
                         <datalist class="dl-effect-local"></datalist>
                     </td>
 
                     <!-- Risk Level -->
-                    <td id="col-0-1-0-5" rel="0-1-0-2" rowspan="1">
-                        <input id="input-0-1-0-5" type="text" class="form-control" list="severity"/>
+                    <td id="col-0-1-0-3" rowspan="1">
+                        <input id="input-0-1-0-3" type="text" class="form-control" list="dl-risk-level"/>
                         <datalist class="dl-risk-level"></datalist>
                     </td>
 
                     <!-- Countermeasures -->
-                    <td id="col-0-1-0-6" rel="0-1-0-2" rowspan="1">
-                        <input id="input-0-1-0-6" type="text" class="form-control" list="occurrence"/>
+                    <td id="col-0-1-0-4" rowspan="1">
+                        <input id="input-0-1-0-4" hasBtn="true" type="text" class="form-control" list="dl-countermeasures"/>
                         <datalist class="dl-countermeasures"></datalist>
+                        <button id="btn-0-1-0-4" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
                     </td>
 
                     <!-- Requirements -->
-                    <td id="col-0-1-0-7" rel="0-1-0-2" rowspan="1">
-                        <input id="input-0-1-0-7" type="text" class="form-control" list="detection"/>
+                    <td id="col-0-1-0-5" rel="0-1-0-4" rowspan="1">
+                        <input id="input-0-1-0-5" type="text" class="form-control" list="dl-requirements"/>
                         <datalist class="dl-requirements"></datalist>
                     </td>
 
                     <!-- Notes -->
-                    <td id="col-0-1-0-8" rel="0-1-0-2" rowspan="1">
-                        <textarea id="input-0-1-0-8" type="text" class="form-control" list="notes"/></textarea>
+                    <td id="col-0-1-0-6" rel="0-1-0-4" rowspan="1">
+                        <textarea id="input-0-1-0-6" type="text" class="form-control" list="notes"/></textarea>
                     </td>
 
                 </tr>
             </tbody>
         </table>
-        <!-- =============================================================== -->
-        <br/>
-        <!-- =============================================================== -->
     </div>
 
+    </br id="space-0">
 
     <button id="remove-zone-0" type="button" class="btn-control" >
         Remove a zone

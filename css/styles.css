@@ -73,16 +73,10 @@ table {
     /* Set the border of the Table */
     border-collapse: collapse;
     border-spacing: 0;
-}
 
-.zone-conn {
-    /* 4 col * 250 */
-    width: 1000px;
-}
-
-.el-fail {
-    /* 9 col * 250 */
-    width: 2250px;
+    /* 7 col * 250 */
+    /* width: 1750px; */
+    width: 100%;
 }
 
 /* Set height of the row */
@@ -96,7 +90,7 @@ th {
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 th, td {
@@ -108,7 +102,8 @@ th, td {
     margin: 0;
     padding: 0;
 
-    width: 500px;
+    /* width: 250px; */
+    width: 14%;
     height: 100%;
 }
 
@@ -148,7 +143,7 @@ input[hasBtn="true"] {
     /* border: 1px solid blue; */
 }
 
-button[id^="btn"] {
+button[id^="btn"], button[id^="fbtn"] {
     width: 25px;
     height: 100%;
     /* height: 50px; */

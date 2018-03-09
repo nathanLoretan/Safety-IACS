@@ -1,28 +1,80 @@
+// TODO:
+// 2. save
+// 3. open
+
 // Initial state of the table
-const nbrColType1 = 4;
-const nbrColType2 = 9;
+const nbrColType1 = 7;
+const nbrColType2 = 7;
 var   nbrZone = 1;
 
-var zone_list = ["test1", "test2", "test3", "test4", "test5"];
-var zone_description_list = ["test1", "test2", "test3", "test4", "test5"];
-var conn_list = [];
-var conn_description_list = [];
-var element_list = [];
-var element_description_list = [];
-var failure_mode_list = [];
-var effect_global_list = [];
-var effect_local_list = [];
-var risk_Level_list = [];
+var zone_list            = ["test1", "test2", "test3", "test4", "test5"];
+var conn_list            = [];
+var element_list         = [];
+var failure_mode_list    = [];
+var effect_global_list   = [];
+var effect_local_list    = [];
+var risk_Level_list      = [];
 var countermeasures_list = [];
-var requirements_list = [];
-var notes_list = [];
+var requirements_list    = [];
 
-function cellHTML(zone, row, col) {
+function failureHTML(zone) {
+    return '' +
+    '<tbody>' +
+        '<tr id="row-' + zone + '-0">' +
+
+            '<!-- Failure Mode -->' +
+            '<td id="col-' + zone + '-0-0" rowspan="1">' +
+                '<input id="input-' + zone + '-0-0" hasBtn="true" type="text" class="form-control" list="dl-failure-mode"/>' +
+                '<datalist class="dl-failure-mode"></datalist>' +
+                '<button id="fbtn-' + zone + '-0-0" state="+" zone="' + zone + '" type="button" class="btn btn-primary">+</button>' +
+            '</td>' +
+
+            '<!-- Failure Effect global,  related to failure mode -->' +
+            '<td id="col-' + zone + '-0-1" rowspan="1">' +
+                '<input id="input-' + zone + '-0-1" type="text" class="form-control" list="dl-effect-global"/>' +
+                '<datalist class="dl-effect-global"></datalist>' +
+            '</td>' +
+
+            '<!-- Failure Effect local,  related to failure mode -->' +
+            '<td id="col-' + zone + '-0-2" rowspan="1">' +
+                '<input id="input-' + zone + '-0-2" type="text" class="form-control"  list="dl-effect-local"/>' +
+                '<datalist class="dl-effect-local"></datalist>' +
+            '</td>' +
+
+            '<!-- Risk Level -->' +
+            '<td id="col-' + zone + '-0-3" rowspan="1">' +
+                '<input id="input-' + zone + '-0-3" type="text" class="form-control" list="dl-risk-level"/>' +
+                '<datalist class="dl-risk-level"></datalist>' +
+            '</td>' +
+
+            '<!-- Countermeasures -->' +
+            '<td id="col-' + zone + '-0-4" rowspan="1">' +
+                '<input id="input-' + zone + '-0-4" hasBtn="true" type="text" class="form-control" list="dl-countermeasures"/>' +
+                '<datalist class="dl-countermeasures"></datalist>' +
+                '<button id="btn-' + zone + '-0-4" state="+" zone="' + zone + '" type="button" class="btn btn-primary">+</button>' +
+            '</td>' +
+
+            '<!-- Requirements -->' +
+            '<td id="col-' + zone + '-0-5" rel="' + zone + '-0-4" rowspan="1">' +
+                '<input id="input-' + zone + '-0-5" type="text" class="form-control" list="dl-requirements"/>' +
+                '<datalist class="dl-requirements"></datalist>' +
+            '</td>' +
+
+            '<!-- Notes -->' +
+            '<td id="col-' + zone + '-0-6" rel="' + zone + '-0-4" rowspan="1">' +
+                '<textarea id="input-' + zone + '-0-6" type="text" class="form-control" list="notes"/></textarea>' +
+            '</td>' +
+
+        '</tr>' +
+    '</tbody>'
+}
+
+function cellBtnHTML(zone, row, col) {
     return  '<input id="input-'+zone+'-'+(row+1)+'-'+col+'" hasBtn="true" type="text" class="form-control"/>' +
             '<button id="btn-'+zone+'-'+(row+1)+'-'+col+'" state="+" zone="'+zone+'" type="button" class="btn btn-primary">+</button>'
 }
 
-function relHTML(zone, row, col) {
+function cellHTML(zone, row, col) {
     return  '<input id="input-'+zone+'-'+(row+1)+'-'+col+'" type="text" class="form-control"/>'
 }
 
@@ -32,59 +84,79 @@ function zoneHTML(zone) {
     var zoneTable2 = zone + '-1';
 
     return '' +
-    '<div class="table-container" id="table-' + zoneTable1 + '">' +
-        '<!-- =================================================================== -->' +
+    '<div class="table-container" id="table-' + zoneTable1 +'">' +
+        '<!-- =============================================================== -->' +
         '<hr/>' +
         '<br/>' +
-        '<!-- =================================================================== -->' +
-        '<table id="zone-' + zoneTable1 + '" class="zone-conn">' +
+        '<!-- =============================================================== -->' +
+        '<table id="zone-' + zoneTable1 +'">' +
             '<thead>' +
                 '<tr>' +
                     '<th>Zone</th>' +
                     '<th>Zone Description</th>' +
                     '<th>Connection</th>' +
                     '<th>Connection Description</th>' +
+                    '<th>Elements</th>' +
+                    '<th>Elements Description</th>' +
+                    '<th>Notes</th>' +
                 '</tr>' +
             '</thead>' +
+        '</table>' +
+        '<table id="zone-' + zoneTable1 +'">' +
             '<tbody>' +
-                '<tr id="row-' + zoneTable1 + '-0">' +
+                '<tr id="row-' + zoneTable1 +'-0">' +
 
                     '<!-- Zone -->' +
-                    '<td id="col-' + zoneTable1 + '-0-0" rowspan="1">' +
-                        '<input id="input-' + zoneTable1 + '-0-0" type="text" class="form-control" list="zone"/>' +
-                        '<datalist id="zone"></datalist>' +
+                    '<td id="col-' + zoneTable1 +'-0-0" rowspan="1">' +
+                        '<input id="input-' + zoneTable1 +'-0-0" type="text" class="form-control" list="dl-zone"/>' +
+                        '<datalist class="dl-zone"></datalist>' +
                     '</td>' +
 
-                    '<!-- Elements Description -->' +
-                    '<td id="col-' + zoneTable1 + '-0-1" rowspan="1">' +
-                        '<textarea id="input-' + zoneTable1 + '-0-1" type="text" class="form-control" list="zone-description"/></textarea>' +
+                    '<!-- Zone Description -->' +
+                    '<td id="col-' + zoneTable1 +'-0-1" rowspan="1">' +
+                        '<textarea id="input-' + zoneTable1 +'-0-1" type="text" class="form-control" list="zone-description"/></textarea>' +
                     '</td>' +
 
                     '<!-- Connection -->' +
-                    '<td id="col-' + zoneTable1 + '-0-2" rowspan="1">' +
-                        '<input id="input-' + zoneTable1 + '-0-2" hasBtn="true" type="text" class="form-control" list="conn"/>' +
-                        '<datalist id="conn"></datalist>' +
-                        '<button id="btn-' + zoneTable1 + '-0-2" state="+" zone="' + zoneTable1 + '" type="button" class="btn btn-primary">+</button>' +
+                    '<td id="col-' + zoneTable1 +'-0-2" rowspan="1">' +
+                        '<input id="input-' + zoneTable1 +'-0-2" hasBtn="true" type="text" class="form-control" list="dl-conn"/>' +
+                        '<datalist class="dl-conn"></datalist>' +
+                        '<button id="btn-' + zoneTable1 +'-0-2" state="+" zone="' + zoneTable1 +'" type="button" class="btn btn-primary">+</button>' +
                     '</td>' +
 
                     '<!-- Connection Description -->' +
-                    '<td id="col-' + zoneTable1 + '-0-3" rel="' + zoneTable1 + '-0-2" rowspan="1">' +
-                        '<textarea id="input-' + zoneTable1 + '-0-3" type="text" class="form-control" list="conn-description"/></textarea>' +
+                    '<td id="col-' + zoneTable1 +'-0-3" rel="' + zoneTable1 +'-0-2" rowspan="1">' +
+                        '<textarea id="input-' + zoneTable1 +'-0-3" type="text" class="form-control" list="conn-description"/></textarea>' +
+                    '</td>' +
+
+                    '<!-- Elements -->' +
+                    '<td id="col-' + zoneTable1 +'-0-4" rowspan="1">' +
+                        '<input id="input-' + zoneTable1 +'-0-4"  hasBtn="true" type="text" class="form-control" list="dl-element"/>' +
+                        '<datalist class="dl-element"></datalist>' +
+                        '<button id="btn-' + zoneTable1 +'-0-4" state="+" zone="' + zoneTable1 +'" type="button" class="btn btn-primary">+</button>' +
+                    '</td>' +
+
+                    '<!-- Elements Description, related to elements -->' +
+                    '<td id="col-' + zoneTable1 +'-0-5" rel="' + zoneTable1 +'-0-4" rowspan="1">' +
+                        '<textarea id="input-' + zoneTable1 +'-0-5" type="text" class="form-control" list="element-description"/></textarea>' +
+                    '</td>' +
+
+                    '<!-- Notes -->' +
+                    '<td id="col-' + zoneTable1 +'-0-6" rowspan="1">' +
+                        '<textarea id="input-' + zoneTable1 +'-0-6" type="text" class="form-control" list="notes"/></textarea>' +
                     '</td>' +
                 '</tr>' +
             '</tbody>' +
         '</table>' +
     '</div>' +
 
-    '<div class="table-container"id="table-' + zoneTable2 + '">' +
-        '<!-- =================================================================== -->' +
+    '<div class="table-container" id="table-' + zoneTable2 +'">' +
+        '<!-- =============================================================== -->' +
         '<br/>' +
-        '<!-- =================================================================== -->' +
-        '<table id="zone-' + zoneTable2 + '" class="el-fail">' +
+        '<!-- =============================================================== -->' +
+        '<table class="header" id="zone-' + zone + '" nbrFailure="1">' +
             '<thead>' +
                 '<tr>' +
-                    '<th rowspan="2">Elements</th>' +
-                    '<th rowspan="2">Elements Description</th>' +
                     '<th rowspan="2">Failure Mode</th>' +
                     '<th colspan="2">Failure Effect</th>' +
                     '<th rowspan="2">Risk Level</th>' +
@@ -96,77 +168,67 @@ function zoneHTML(zone) {
                     '<th>Global</th>' +
                     '<th>Local</th>' +
                 '</tr>' +
-
             '</thead>' +
+        '</table>' +
+        '<table id="zone-' + zoneTable2 +'">' +
             '<tbody>' +
-                '<tr id="row-' + zoneTable2 + '-0">' +
-
-                    '<!-- Elements -->' +
-                    '<td id="col-' + zoneTable2 + '-0-0" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 + '-0-0" hasBtn="true" type="text" class="form-control" list="element"/>' +
-                        '<datalist id="element"></datalist>' +
-                        '<button id="btn-' + zoneTable2 + '-0-0" state="+" zone="' + zoneTable2 + '" type="button" class="btn btn-primary" >+</button>' +
-                    '</td>' +
-
-                    '<!-- Elements Description, related to elements -->' +
-                    '<td id="col-' + zoneTable2 + '-0-1" rel="' + zoneTable2 + '-0-0" rowspan="1">' +
-                            '<textarea id="input-' + zoneTable2 + '-0-1" type="text" class="form-control" list="element-description"/></textarea>' +
-                    '</td>' +
+                '<tr id="row-' + zoneTable2 +'-0">' +
 
                     '<!-- Failure Mode -->' +
-                    '<td id="col-' + zoneTable2 + '-0-2" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 + '-0-2" hasBtn="true" type="text" class="form-control" list="failure-mode"/>' +
-                        '<datalist id="failure-mode"></datalist>' +
-                        '<button id="btn-' + zoneTable2 + '-0-2" state="+" zone="' + zoneTable2 + '" type="button" class="btn btn-primary" >+</button>' +
+                    '<td id="col-' + zoneTable2 +'-0-0" rowspan="1">' +
+                        '<input id="input-' + zoneTable2 +'-0-0" hasBtn="true" type="text" class="form-control" list="dl-failure-mode"/>' +
+                        '<datalist class="dl-failure-mode"></datalist>' +
+                        '<button id="fbtn-' + zoneTable2 +'-0-0" state="+" zone="' + zoneTable2 +'" type="button" class="btn btn-primary">+</button>' +
                     '</td>' +
 
                     '<!-- Failure Effect global,  related to failure mode -->' +
-                    '<td id="col-' + zoneTable2 + '-0-3" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 + '-0-3" type="text" class="form-control" list="effect-global"/>' +
-                        '<datalist id="effect-global"></datalist>' +
+                    '<td id="col-' + zoneTable2 +'-0-1" rowspan="1">' +
+                        '<input id="input-' + zoneTable2 +'-0-1" type="text" class="form-control" list="dl-effect-global"/>' +
+                        '<datalist class="dl-effect-global"></datalist>' +
                     '</td>' +
 
                     '<!-- Failure Effect local,  related to failure mode -->' +
-                    '<td id="col-' + zoneTable2 + '-0-4" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 + '-0-4" type="text" class="form-control" list="effect-local"/>' +
-                        '<datalist id="effect-local"></datalist>' +
+                    '<td id="col-' + zoneTable2 +'-0-2" rowspan="1">' +
+                        '<input id="input-' + zoneTable2 +'-0-2" type="text" class="form-control"  list="dl-effect-local"/>' +
+                        '<datalist class="dl-effect-local"></datalist>' +
                     '</td>' +
 
                     '<!-- Risk Level -->' +
-                    '<td id="col-' + zoneTable2 + '-0-5" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 + '-0-5" type="text" class="form-control" list="severity"/>' +
-                        '<datalist id="severity"></datalist>' +
+                    '<td id="col-' + zoneTable2 +'-0-3" rowspan="1">' +
+                        '<input id="input-' + zoneTable2 +'-0-3" type="text" class="form-control" list="dl-risk-level"/>' +
+                        '<datalist class="dl-risk-level"></datalist>' +
                     '</td>' +
 
                     '<!-- Countermeasures -->' +
-                    '<td id="col-' + zoneTable2 + '-0-6" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 + '-0-6" type="text" class="form-control" list="occurrence"/>' +
-                        '<datalist id="occurrence"></datalist>' +
+                    '<td id="col-' + zoneTable2 +'-0-4" rowspan="1">' +
+                        '<input id="input-' + zoneTable2 +'-0-4" hasBtn="true" type="text" class="form-control" list="dl-countermeasures"/>' +
+                        '<datalist class="dl-countermeasures"></datalist>' +
+                        '<button id="btn-' + zoneTable2 +'-0-4" state="+" zone="' + zoneTable2 +'" type="button" class="btn btn-primary">+</button>' +
                     '</td>' +
 
                     '<!-- Requirements -->' +
-                    '<td id="col-' + zoneTable2 + '-0-7" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 + '-0-7" type="text" class="form-control" list="detection"/>' +
-                        '<datalist id="detection"></datalist>' +
+                    '<td id="col-' + zoneTable2 +'-0-5" rel="' + zoneTable2 +'-0-4" rowspan="1">' +
+                        '<input id="input-' + zoneTable2 +'-0-5" type="text" class="form-control" list="dl-requirements"/>' +
+                        '<datalist class="dl-requirements"></datalist>' +
                     '</td>' +
 
                     '<!-- Notes -->' +
-                    '<td id="col-' + zoneTable2 + '-0-8" rel="' + zoneTable2 + '-0-2" rowspan="1">' +
-                        '<textarea id="input-' + zoneTable2 + '-0-8" type="text" class="form-control" list="notes"/></textarea>' +
+                    '<td id="col-' + zoneTable2 +'-0-6" rel="' + zoneTable2 +'-0-4" rowspan="1">' +
+                        '<textarea id="input-' + zoneTable2 +'-0-6" type="text" class="form-control" list="notes"/></textarea>' +
                     '</td>' +
 
                 '</tr>' +
             '</tbody>' +
         '</table>' +
-        '<!-- =================================================================== -->' +
-        '<br/>' +
-        '<!-- =================================================================== -->' +
     '</div>' +
 
+    '</br id="space-' + zone + '">' +
 
     '<button id="remove-zone-' + zone + '" type="button" class="btn-control" >' +
         'Remove a zone' +
-    '</button>'
+    '</button>' +
+
+    '<!-- =================================================================== -->'
 }
 
 function addNewCell(table, zone, row, col, selectedRow) {
@@ -205,9 +267,90 @@ function addNewCell(table, zone, row, col, selectedRow) {
     }
 }
 
-function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
+function getNbrRel(zone, rel) {
 
-    // console.log("NewEntries:", zone, row, col, rel, nbrRow, nbrCol)
+    var nbrRel = rel.length
+
+    for(var i = 0; i < rel.length; i++) {
+
+        var relId  = rel[i].id;
+        var relRow = parseInt(relId.substring(8, relId.length));
+        var relCol = parseInt(relId.substring(10, relId.length));
+
+        var interRel = $('td[rel="' + zone + '-' + relRow + '-'+ relCol + '"]');
+        nbrRel += getNbrRel(zone, interRel);
+    }
+
+    return nbrRel;
+}
+
+function addRel(table, zone, row, col, rel, selectedRow, rowspan) {
+
+    var relId  = rel.id;
+    var relRow = row;
+    var relCol = parseInt(relId.substring(10, relId.length));
+
+    var cell = addNewCell(table, zone, relRow, relCol, selectedRow);
+
+    cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
+    cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
+    cell.rowSpan = rowspan;
+
+    hasBtn = document.getElementById("input-" + zone + '-' + row + '-'+ relCol).getAttribute('hasBtn');
+
+    if(hasBtn == "true") {
+        cell.innerHTML =  cellBtnHTML(zone, relRow, relCol);
+    }
+    else {
+        cell.innerHTML =  cellHTML(zone, relRow, relCol);
+    }
+
+    // Add a cell to the related cell to the current related one :D
+    var interRel = $('td[rel="' + zone + '-' + relRow + '-'+ relCol + '"]');
+    for(var i = 0; i < interRel.length; i++) {
+        addRel(table, zone, relRow, relCol, interRel[i], selectedRow, rowspan);
+    }
+}
+
+function delCopyRel(zone, row, rel, nbrRow) {
+
+    var relId  = rel.id;
+    var relRow = row;
+    var relCol = parseInt(relId.substring(10, relId.length));
+
+    // Copy the values of the cells below this one
+    for(var i = 0; i < (nbrRow - (relRow+1)); i++) {
+        var input1 = '#input-' + zone + '-' + (i+relRow) + '-' + relCol;
+        var input2 = '#input-' + zone + '-' + (i+1+relRow) + '-' + relCol;
+        $(input1).val($(input2).val());
+     }
+
+     // Add a cell to the related cell to the current related one :D
+     var interRel = $('td[rel="' + zone + '-' + relRow + '-'+ relCol + '"]');
+     for(var i = 0; i < interRel.length; i++) {
+         delCopyRel(zone, relRow, interRel[i], nbrRow);
+     }
+}
+
+function delRel(table, zone, row, rel) {
+
+    var relId  = rel.id;
+    var relRow = row;
+    var relCol = parseInt(relId.substring(10, relId.length));
+
+    var cell_idx = table.rows["row-" + zone + '-' + relRow].cells["col-" + zone + '-' + relRow + '-' + relCol].cellIndex;
+    table.rows["row-" + zone + '-' + relRow].deleteCell(cell_idx);
+
+    // Add a cell to the related cell to the current related one :D
+    var interRel = $('td[rel="' + zone + '-' + relRow + '-'+ relCol + '"]');
+    // console.log('rel=' + zone + '-' + relRow + '-'+ relCol)
+    // console.log(interRel)
+    for(var i = 0; i < interRel.length; i++) {
+        delRel(table, zone, relRow, interRel[i]);
+    }
+}
+
+function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
 
     // Create a new row or select the last existing one
     if(row+1 == nbrRow) {
@@ -243,21 +386,23 @@ function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
 
                 cell.id = "col-" + zone + '-' + (row+1) + '-'+ col;
                 cell.rowSpan = rowspan-1;
-                cell.innerHTML = cellHTML(zone, row, col);
+                cell.innerHTML = cellBtnHTML(zone, row, col);
 
                 // Create the new cells for the related columns
                 for(x = 0; x < rel.length; x++) {
 
-                    var relId  = rel[x].id;
-                    var relRow = row;
-                    var relCol = parseInt(relId.substring(10, relId.length));
+                     addRel(table, zone, row, col, rel[x], selectedRow, rowspan);
 
-                    cell = addNewCell(table, zone, relRow, relCol, selectedRow);
-
-                    cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
-                    cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
-                    cell.rowSpan = rowspan-1;
-                    cell.innerHTML =  relHTML(zone, relRow, relCol);
+                    // var relId  = rel[x].id;
+                    // var relRow = row;
+                    // var relCol = parseInt(relId.substring(10, relId.length));
+                    //
+                    // cell = addNewCell(table, zone, relRow, relCol, selectedRow);
+                    //
+                    // cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
+                    // cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
+                    // cell.rowSpan = rowspan-1;
+                    // cell.innerHTML =  cellHTML(zone, relRow, relCol);
                 }
             }
             else {
@@ -266,21 +411,23 @@ function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
 
                 cell.id = "col-" + zone + '-' + (row+1) + '-'+ col;
                 cell.rowSpan = 1;
-                cell.innerHTML = cellHTML(zone, row, col);
+                cell.innerHTML = cellBtnHTML(zone, row, col);
 
                 // Create the new cells for the related columns
                 for(var x = 0; x < rel.length; x++) {
 
-                    var relId  = rel[x].id;
-                    var relRow = row;
-                    var relCol = parseInt(relId.substring(10, relId.length));
+                    addRel(table, zone, row, col, rel[x], selectedRow, rowspan);
 
-                    cell = addNewCell(table, zone, relRow, relCol, selectedRow);
-
-                    cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
-                    cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
-                    cell.rowSpan = 1;
-                    cell.innerHTML =  relHTML(zone, relRow, relCol);
+                    // var relId  = rel[x].id;
+                    // var relRow = row;
+                    // var relCol = parseInt(relId.substring(10, relId.length));
+                    //
+                    // cell = addNewCell(table, zone, relRow, relCol, selectedRow);
+                    //
+                    // cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
+                    // cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
+                    // cell.rowSpan = 1;
+                    // cell.innerHTML =  cellHTML(zone, relRow, relCol);
                 }
             }
         }
@@ -312,8 +459,9 @@ function fillDatalist() {
     document.getElementsByClassName('dl-countermeasures').innerHTML = '';
     document.getElementsByClassName('dl-requirements').innerHTML = '';
 
-    for(var i = 0; i < zone_list.length; i++)
+    for(var i = 0; i < zone_list.length; i++) {
         document.getElementsByClassName('dl-zone').innerHTML += '<option value="'+zone_list[i]+'" />';
+    }
 
     for(var i = 0; i < conn_list.length; i++)
         document.getElementsByClassName('dl-conn').innerHTML += '<option value="'+conn_list[i]+'" />';
@@ -338,9 +486,6 @@ function fillDatalist() {
 
     for(var i = 0; i < requirements_list.length; i++)
         document.getElementsByClassName('dl-requirements').innerHTML += '<option value="'+requirements_list[i]+'" />';
-
-    for(var i = 0; i < notes_list.length; i++)
-        document.getElementsByClassName('dl-notes').innerHTML += '<option value="'+notes_list[i]+'" />';
 }
 
 $(document).ready(function() {
@@ -360,6 +505,49 @@ $(document).ready(function() {
     *   . d = column
     */
     fillDatalist();
+
+    $(document).on("click", 'button[id^="fbtn"]', function(ev) {
+
+        // Get parent table
+        var state = $(this).attr('state');
+        var id    = $(this).attr('id');
+
+        // Get table type, row and column from btn ID
+        var zone = parseInt(id.substring(5, id.length));
+        var type = parseInt(id.substring(7, id.length));
+        var row  = parseInt(id.substring(9, id.length));
+        var col  = parseInt(id.substring(11, id.length));
+
+        var header = document.getElementById("zone-" + zone);
+        var nbrFailure = parseInt(header.getAttribute('nbrFailure'));
+        var failureIdx = parseInt(header.getAttribute('failureIdx'));
+
+        if(state == '+') {
+
+            // Change icone + -> -
+            document.getElementById('fbtn-' + zone + '-' + type + '-' + row + '-' + col).innerHTML = "-";
+
+            // Change state of the button
+            $(this).attr('state', '-');
+
+            failureIdx += 1;
+            var newZone = zone + '-' + failureIdx;
+
+            // Add a new failure table
+            var newTable = document.createElement('table');
+            newTable.setAttribute('id', 'zone-' + newZone);
+            newTable.innerHTML = failureHTML(newZone);
+            document.getElementById('table-' + zone + '-1').appendChild(newTable);
+
+            document.getElementById("zone-" + zone).setAttribute('nbrFailure', nbrFailure+1);
+            document.getElementById("zone-" + zone).setAttribute('failureIdx', failureIdx);
+        }
+        // Remove a table
+        else {
+            document.getElementById('zone-' + zone + '-' + type).remove();
+            document.getElementById("zone-" + zone).setAttribute('nbrFailure', nbrFailure-1);
+        }
+    });
 
     $(document).on("click", 'button[id^="btn"]', function(ev) {
 
@@ -384,7 +572,7 @@ $(document).ready(function() {
         }
         else {
             var nbrCol = nbrColType2;
-            var nbrRow = table.rows.length-2;
+            var nbrRow = table.rows.length;
         }
 
         // Add a new cell
@@ -402,8 +590,8 @@ $(document).ready(function() {
         // Remove a cell
         else {
 
-            // If it is the only use object at the last row
-            if(table.rows["row-" + zone + '-' + (nbrRow-1)].cells.length - rel.length == 1 &&
+            // If it is the only used cell with related ones at the last row
+            if(table.rows["row-" + zone + '-' + (nbrRow-1)].cells.length - getNbrRel(zone, rel) == 1 &&
                typeof table.rows["row-" + zone + '-' + (nbrRow-1)].cells["col-" + zone + '-' + (nbrRow-1) + '-' + col] !== 'undefined'){
 
                // Copy the values of the cells below this one
@@ -416,15 +604,17 @@ $(document).ready(function() {
                 // Do the same for each relative cells
                 for(var x = 0; x < rel.length; x++) {
 
-                    var relId  = rel[x].id;
-                    var relCol = parseInt(relId.substring(10, relId.length));
+                    delCopyRel(zone, row, rel[x], nbrRow);
 
-                    // Copy the values of the cells below this one
-                    for(var i = 0; i < (nbrRow - (row+1)); i++) {
-                        var input1 = '#input-' + zone + '-' + (i+row) + '-' + relCol;
-                        var input2 = '#input-' + zone + '-' + (i+1+row) + '-' + relCol;
-                        $(input1).val($(input2).val());
-                     }
+                    // var relId  = rel[x].id;
+                    // var relCol = parseInt(relId.substring(10, relId.length));
+                    //
+                    // // Copy the values of the cells below this one
+                    // for(var i = 0; i < (nbrRow - (row+1)); i++) {
+                    //     var input1 = '#input-' + zone + '-' + (i+row) + '-' + relCol;
+                    //     var input2 = '#input-' + zone + '-' + (i+1+row) + '-' + relCol;
+                    //     $(input1).val($(input2).val());
+                    //  }
                 }
 
                 // Remove each useless cells merged with each column
@@ -464,15 +654,17 @@ $(document).ready(function() {
                  // Do the same for each relative cells
                  for(var x = 0; x < rel.length; x++) {
 
-                     var relId  = rel[x].id;
-                     var relCol = parseInt(relId.substring(10, relId.length));
+                     delCopyRel(zone, row, rel[x], nbrRow);
 
-                     // Copy the values of the cells below this one
-                     for(i = 0; i < (nbrRow - (row+1)); i++) {
-                         var input1 = '#input-' + zone + '-' + (i+row) + '-' + relCol;
-                         var input2 = '#input-' + zone + '-' + (i+1+row) + '-' + relCol;
-                         $(input1).val($(input2).val());
-                      }
+                     // var relId  = rel[x].id;
+                     // var relCol = parseInt(relId.substring(10, relId.length));
+                     //
+                     // // Copy the values of the cells below this one
+                     // for(i = 0; i < (nbrRow - (row+1)); i++) {
+                     //     var input1 = '#input-' + zone + '-' + (i+row) + '-' + relCol;
+                     //     var input2 = '#input-' + zone + '-' + (i+1+row) + '-' + relCol;
+                     //     $(input1).val($(input2).val());
+                     //  }
                  }
 
                  // Search the last above cell to merge with new new one
@@ -487,17 +679,19 @@ $(document).ready(function() {
                  $('td[rel="' + zone + '-' + (nbrRow-(n+1)) + '-'+ col + '"]').attr('rowSpan', table.rows["row-" + zone + '-' + (nbrRow-(n+1))].cells["col-" + zone + '-' + (nbrRow-(n+1)) + '-' + col].rowSpan);
 
                  // Delete the last cell
-                 cell_idx = table.rows["row-" + zone + '-' + (nbrRow-n)].cells["col-" + zone + '-' + (nbrRow-n) + '-' + col].cellIndex;
+                 var cell_idx = table.rows["row-" + zone + '-' + (nbrRow-n)].cells["col-" + zone + '-' + (nbrRow-n) + '-' + col].cellIndex;
                  table.rows["row-" + zone + '-' + (nbrRow-n)].deleteCell(cell_idx);
 
-                 // Create the new cells for the related columns
+                 // delete the cells for the related columns
                  for(var x = 0; x < rel.length; x++) {
 
-                     var relId  = rel[x].id;
-                     var relCol = parseInt(relId.substring(10, relId.length));
+                     delRel(table, zone, (nbrRow-n), rel[x]);
 
-                     cell_idx = table.rows["row-" + zone + '-' + (nbrRow-n)].cells["col-" + zone + '-' + (nbrRow-n) + '-' + relCol].cellIndex;
-                     table.rows["row-" + zone + '-' + (nbrRow-n)].deleteCell(cell_idx);
+                     // var relId  = rel[x].id;
+                     // var relCol = parseInt(relId.substring(10, relId.length));
+                     //
+                     // cell_idx = table.rows["row-" + zone + '-' + (nbrRow-n)].cells["col-" + zone + '-' + (nbrRow-n) + '-' + relCol].cellIndex;
+                     // table.rows["row-" + zone + '-' + (nbrRow-n)].deleteCell(cell_idx);
                  }
 
                  // Change icone - -> +
@@ -511,7 +705,12 @@ $(document).ready(function() {
 
     $(document).on("click", 'button[id="add-zone"]', function(ev) {
 
-        document.body.innerHTML += zoneHTML(nbrZone);
+        // Add a new failure table
+        var newZone = document.createElement('div');
+        newZone.innerHTML = zoneHTML(nbrZone);
+        document.body.appendChild(newZone);
+
+        // document.body.innerHTML += zoneHTML(nbrZone);
         nbrZone += 1;
 
         fillDatalist();
@@ -526,10 +725,9 @@ $(document).ready(function() {
         document.getElementById('table-' + zone + '-' + 0).remove();
         document.getElementById('table-' + zone + '-' + 1).remove();
         document.getElementById('remove-zone-' + zone).remove();
+        $('#space-' + zone).remove();
     });
 
-    // https://codepen.io/davidelrizzo/pen/cxsGb
-    // https://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/
     $(document).on("click", 'button[id="save"]', function(ev) {
 
         var info = "";
@@ -541,31 +739,78 @@ $(document).ready(function() {
 
         info += "nbrZone::" + nbrZone + ";;";
 
-        console.log(info);
+        zones = $('.header');
+        for(var i = 0; i < zones.length; i++) {
+            var zid = zones[i].id
+            zone = parseInt(zid.substring(5, zid.length));
 
-        for(i = 0; i < nbrZone; i++) {
-            table1 = document.getElementById('zone-' + i + '-0');
-            table2 = document.getElementById('zone-' + i + '-1');
+            info += "zone::" + zone + ";;";
+            info += "nbrFailure::" + zones[i].getAttribute('nbrFailure') + ";;";
+            info += "failureIdx::" + zones[i].getAttribute('failureIdx') + ";;";
 
-            // info += "zone-" + i + "-0::" + (table1.rows.length-1) + ";;";
-            for(var r = 0; r < table1.rows.length-1; r++) {
-                for(var c = 0; c < nbrColType1; c++) {
-                    if(document.getElementById("input-"+i+"-0-"+r+"-"+c) != null) {
-                        info += "col-"+i+"-0-"+r+"-"+c+"::" + document.getElementById("input-"+i+"-0-"+r+"-"+c).value + ";;";
+            var tables = $('table[id^="zone-' + zone + '-"]');
+            for(var y = 0; y < tables.length; y++) {
+                var tid = tables[y].id
+                table = parseInt(tid.substring(7, tid.length));
+
+                info += "table::" + table + ";;";
+
+                for(var r = 0; r < tables[y].rows.length; r++) {
+                    for(var c = 0; c < 7; c++) {
+                        if(document.getElementById("input-"+zone+"-"+table+"-"+r+"-"+c) != null) {
+                            info += "col-"+zone+"-"+table+"-"+r+"-"+c+"::" + document.getElementById("input-"+zone+"-"+table+"-"+r+"-"+c).value + ";;";
+                        }
                     }
                 }
             }
 
-            // info += "zone-" + i + "-1::" + (table2.rows.length-2) + ";;";
-            for(var r = 0; r < table2.rows.length-2; r++) {
-                for(var c = 0; c < nbrColType2; c++) {
-                    if(document.getElementById("input-"+i+"-1-"+r+"-"+c) != null) {
-                        info += "col-"+i+"-1-"+r+"-"+c+"::" + document.getElementById("input-"+i+"-1-"+r+"-"+c).value + ";;";
-                    }
-                }
-            }
+            //
+            // // Zone, Connection and Description table
+            // var table = document.getElementById('zone-' + i + '-0');
+            // for(var r = 0; r < table.rows.length-1; r++) {
+            //     for(var c = 0; c < nbrColType1; c++) {
+            //         if(document.getElementById("input-"+zone+"-0-"+r+"-"+c) != null) {
+            //             info += "col-"+zone+"-0-"+r+"-"+c+"::" + document.getElementById("input-"+zone+"-0-"+r+"-"+c).value + ";;";
+            //         }
+            //     }
+            // }
+
+            // ----
+
+
+
         }
 
+        // // for(i = 0; i < nbrZone; i++) {
+        //     // var table1 = document.getElementById('zone-' + i + '-0');
+        //
+        //     // info += "zone-" + i + "-0::" + (table1.rows.length-1) + ";;";
+        //     for(var r = 0; r < table1.rows.length-1; r++) {
+        //         for(var c = 0; c < nbrColType1; c++) {
+        //             if(document.getElementById("input-"+i+"-0-"+r+"-"+c) != null) {
+        //                 info += "col-"+i+"-0-"+r+"-"+c+"::" + document.getElementById("input-"+i+"-0-"+r+"-"+c).value + ";;";
+        //             }
+        //         }
+        //     }
+        //
+        //     var nbrFailure = document.getElementById('zone-' + i).getAttribute('nbrFailure');
+        //
+        //     // info += "zone-" + i + "::" + nbrFailure + ";;";
+        //     for(var f = 0; f < nbrFailure; f++) {
+        //         var table2 = document.getElementById('zone-' + i + '-' + f);
+        //
+        //         // info += "zone-" + i + "-1::" + (table2.rows.length-2) + ";;";
+        //         for(var r = 0; r < table2.rows.length-2; r++) {
+        //             for(var c = 0; c < nbrColType2; c++) {
+        //                 if(document.getElementById("input-"+i+"-"+f+"-"+r+"-"+c) != null) {
+        //                     info += "col-"+i+"-"+f+"-"+r+"-"+c+"::" + document.getElementById("input-"+i+"-"+f+"-"+r+"-"+c).value + ";;";
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
+        // Save the file
         var textToSaveAsBlob = new Blob([info], {type:"text/plain"});
         var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
         var fileNameToSaveAs = document.getElementById("filename").value;
@@ -587,6 +832,7 @@ $(document).ready(function() {
 
         $('.table-container').remove();
         $('button[id^="remove-zone"]').remove();
+        $('br[id^="space-"').remove();
 
         var fileToLoad = document.getElementById("fileToLoad").files[0];
         var fileReader = new FileReader();
@@ -603,80 +849,162 @@ $(document).ready(function() {
 
             var nbrZone = info[5].split("::")[1];
 
-            for(var i = 0; i < nbrZone; i++) {
-                document.body.innerHTML += zoneHTML(i);
-            }
+            var zone  = 0;
+            var table = 0;
+            var nbrFailure = 0;
+            var failureIdx = 0;
 
-            for(var i = 6; i < info.length-1; i++) {
+            for(var i = 6; i < info.length - 5; i++) {
 
-                var id = info[i].split("::")[0];
+                var id    = info[i].split("::")[0];
                 var value = info[i].split("::")[1];
-                var zone = parseInt(id.substring(4, id.length));
-                var type = parseInt(id.substring(6, id.length));
-                var row  = parseInt(id.substring(8, id.length));
-                var col  = parseInt(id.substring(10, id.length));
 
-                var table = document.getElementById('zone-' + zone + '-' + type);
+                if(id == "zone") {
+                    zone = value;
+                    var newZone = document.createElement('div');
+                    newZone.innerHTML = zoneHTML(zone);
+                    document.body.appendChild(newZone);
 
-                var zone = zone + '-' + type
+                    // Remove this zone because it is not sure that it exists
+                    $('#zone-0-1').remove();
+                    $('#space-0').remove();
+                    continue;
+                }
+                else if(id == "table") {
 
-                // console.log(i);
-                if(row > 0) {
-
-                    var rel = $('td[rel="' + zone + '-' + (row-1) + '-' + col + '"]');
-
-                    if(type == 0) {
-                        var nbrCol =  nbrColType1;
-                        // var nbrRow = table.rows.length-1;   // Problem
-                    }
-                    else {
-                        var nbrCol = nbrColType2;
-                        // var nbrRow = table.rows.length-2;   // Problem
-                    }
-
-                    var nbrRow = row;
-
-                    // console.log("--------------------------------------------");
-                    // console.log("nbrRow:" + nbrRow);
-                    // console.log('input-' + zone + '-' + type + '-' + row + '-' + col);
-
-                    // hasBtn = document.getElementById('input-' + zone + '-' + type + '-' + row + '-' + col).getAttribute('hasBtn');
-                    // console.log("hasBtn:" + hasBtn)
-
-                    // console.log('input-' + zone + '-' + (row-1) + '-' + col);
-                    var isRel = document.getElementById('col-' + zone + '-' + (row-1) + '-' + col).getAttribute('rel');
-                    //
-                    // console.log("isRel:" + isRel);
-                    // console.log('input-' + zone + '-' + row + '-' + col);
-                    // console.log("NewEntries2:", zone, row, col, rel, nbrRow, nbrCol)
-
-                    if(isRel == null) {
+                    // Change the state of the button to add failure
+                    if(table != value && table != 0 && value != 0) {
 
                         // Change icone + -> -
-                        document.getElementById('btn-' + zone + '-' + (row-1) + '-' + col).innerHTML = "-";
+                        document.getElementById('fbtn-' + zone + '-' + table + '-0-0').innerHTML = "-";
 
                         // Change state of the button
-                        document.getElementById('btn-' + zone + '-' + (row-1) + '-' + col).setAttribute('state', '-');
-
-                        NewEntries(table, zone, row-1, col, rel, nbrRow, nbrCol);
+                        document.getElementById('fbtn-' + zone + '-' + table + '-0-0').setAttribute('state', '-');
                     }
-                }
-                // console.log(i);
-                document.getElementById('input-' + zone + '-' + row + '-' + col).value = value;
-                // console.log(i);
-            }
 
-            // for(var i = 1; i < info.length-1; i++) {
+                    table = value;
+
+                    if(table != 0) {
+                        // Add a new failure table
+                        var newTable = document.createElement('table');
+                        newTable.setAttribute('id', 'zone-' + zone + '-' + table);
+                        newTable.innerHTML = failureHTML(zone + '-' + table);
+                        document.getElementById('table-' + zone + '-1').appendChild(newTable);
+                    }
+                    continue;
+                }
+                else if(id == "nbrFailure") {
+                    nbrFailure = value;
+                     $('#zone-' + zone).attr('nbrFailure', nbrFailure);
+                    continue;
+                }
+                else if(id == "failureIdx") {
+                    failureIdx = value;
+                     $('#zone-' + zone).attr('failureIdx', failureIdx);
+                    continue;
+                }
+                else {
+                    var row  = parseInt(id.substring(8, id.length));
+                    var col  = parseInt(id.substring(10, id.length));
+                    var nbrCol = 7;
+
+                    var objTable = document.getElementById('zone-' + zone + '-' + table);
+
+                    // var zone = zone + '-' + table
+
+                    if(row > 0) {
+
+                        var rel = $('td[rel="' + zone + '-' + table + '-' + (row-1) + '-' + col + '"]');
+
+                        var nbrRow = row;
+
+                        var isRel = document.getElementById('col-' + zone + '-' + table + '-' + (row-1) + '-' + col).getAttribute('rel');
+
+                        if(isRel == null) {
+
+                            // Change icone + -> -
+                            document.getElementById('btn-' + zone + '-' + table + '-' + (row-1) + '-' + col).innerHTML = "-";
+
+                            // Change state of the button
+                            document.getElementById('btn-' + zone + '-' + table + '-' + (row-1) + '-' + col).setAttribute('state', '-');
+
+                            NewEntries(objTable, zone + '-' + table, row-1, col, rel, nbrRow, nbrCol);
+                        }
+                    }
+                    document.getElementById('input-' + zone + '-' + table + '-' + row + '-' + col).value = value;
+                }
+
+            }
+            //     document.body.innerHTML += zoneHTML(i);
+            // }
             //
-            //     id = info[i].split("::")[0];
-            //     value = info[i].split("::")[1];
-            //     zone = parseInt(id.substring(4, id.length));
-            //     type = parseInt(id.substring(6, id.length));
-            //     row  = parseInt(id.substring(8, id.length));
-            //     col  = parseInt(id.substring(10, id.length));
+            // for(var i = 6; i < info.length-1; i++) {
             //
-            //     // Put in another loop
-            //     document.getElementById('input-' + zone + '-' + type + '-' + row + '-' + col).value = value;
+            //     var id = info[i].split("::")[0];
+            //     var value = info[i].split("::")[1];
+            //
+            //     if(id.search("zone-") != -1) {
+            //         console.log("test", id, value);
+            //          for(f = 0; f < value; f++) {
+            //
+            //          }
+            //
+            //          // // Change icone + -> -
+            //          // document.getElementById('fbtn-' + zone + '-' + type + '-' + row + '-' + col).innerHTML = "-";
+            //          //
+            //          // // Change state of the button
+            //          // $(this).attr('state', '-');
+            //          //
+            //          // failureIdx += 1;
+            //          // var newZone = zone + '-' + failureIdx;
+            //          //
+            //          // // Add a new failure table
+            //          // var newTable = document.createElement('table');
+            //          // newTable.setAttribute('id', 'zone-' + newZone);
+            //          // newTable.innerHTML = failureHTML(newZone);
+            //          // document.getElementById('table-' + zone + '-1').appendChild(newTable);
+            //          //
+            //          // document.getElementById("zone-" + zone).setAttribute('nbrFailure', nbrFailure+1);
+            //          // document.getElementById("zone-" + zone).setAttribute('failureIdx', failureIdx);
+            //          continue;
+            //     }
+            //
+            //     var zone = parseInt(id.substring(4, id.length));
+            //     var type = parseInt(id.substring(6, id.length));
+            //     var row  = parseInt(id.substring(8, id.length));
+            //     var col  = parseInt(id.substring(10, id.length));
+            //
+            //     var table = document.getElementById('zone-' + zone + '-' + type);
+            //
+            //     var zone = zone + '-' + type
+            //
+            //     if(row > 0) {
+            //
+            //         var rel = $('td[rel="' + zone + '-' + (row-1) + '-' + col + '"]');
+            //
+            //         if(type == 0) {
+            //             var nbrCol =  nbrColType1;
+            //         }
+            //         else {
+            //             var nbrCol = nbrColType2;
+            //         }
+            //
+            //         var nbrRow = row;
+            //
+            //         var isRel = document.getElementById('col-' + zone + '-' + (row-1) + '-' + col).getAttribute('rel');
+            //
+            //         if(isRel == null) {
+            //
+            //             // Change icone + -> -
+            //             document.getElementById('btn-' + zone + '-' + (row-1) + '-' + col).innerHTML = "-";
+            //
+            //             // Change state of the button
+            //             document.getElementById('btn-' + zone + '-' + (row-1) + '-' + col).setAttribute('state', '-');
+            //
+            //             NewEntries(table, zone, row-1, col, rel, nbrRow, nbrCol);
+            //         }
+            //     }
+            //     document.getElementById('input-' + zone + '-' + row + '-' + col).value = value;
             // }
         };
         fileReader.readAsText(fileToLoad, "UTF-8");
