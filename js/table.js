@@ -115,9 +115,9 @@ function zoneHTML(zone) {
 
                     '<!-- Failure Mode -->' +
                     '<td id="col-' + zoneTable2 + '-0-2" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 + '-0-2" type="text" class="form-control" list="failure-mode"/>' +
+                        '<input id="input-' + zoneTable2 + '-0-2" hasBtn="true" type="text" class="form-control" list="failure-mode"/>' +
                         '<datalist id="failure-mode"></datalist>' +
-                        '<button id="btn-' + zoneTable2 + '-0-2" hasBtn="true" state="+" zone="' + zoneTable2 + '" type="button" class="btn btn-primary" >+</button>' +
+                        '<button id="btn-' + zoneTable2 + '-0-2" state="+" zone="' + zoneTable2 + '" type="button" class="btn btn-primary" >+</button>' +
                     '</td>' +
 
                     '<!-- Failure Effect global,  related to failure mode -->' +
@@ -182,16 +182,16 @@ function addNewCell(table, zone, row, col, selectedRow) {
         return cell = selectedRow.insertCell(0);
     }
     else {
-        for(c = 0; c < table.rows["row-" + zone + '-' + (row+1)].cells.length; c++) {
+        for(var c = 0; c < table.rows["row-" + zone + '-' + (row+1)].cells.length; c++) {
 
             // Get the id of the existing cell on the row
-            cmp_id   = table.rows["row-" + zone + '-' + (row+1)].cells[c].getAttribute('id');
+            var cmp_id   = table.rows["row-" + zone + '-' + (row+1)].cells[c].getAttribute('id');
 
             // Get the col number of the existing cell on the row
-            cmp_col  = parseInt(cmp_id.substring(10, cmp_id.length));
+            var cmp_col  = parseInt(cmp_id.substring(10, cmp_id.length));
 
             // Get the index of the cell existing on the row
-            cell_idx = table.rows["row-" + zone + '-' + (row+1)].cells[c].cellIndex;
+            var cell_idx = table.rows["row-" + zone + '-' + (row+1)].cells[c].cellIndex;
 
             // If the column is before the existing one
             if(col < cmp_col) {
@@ -207,6 +207,8 @@ function addNewCell(table, zone, row, col, selectedRow) {
 
 function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
 
+    // console.log("NewEntries:", zone, row, col, rel, nbrRow, nbrCol)
+
     // Create a new row or select the last existing one
     if(row+1 == nbrRow) {
 
@@ -218,7 +220,7 @@ function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
         selectedRow.id = "row-" + zone + '-' + (row + 1);
     }
     else {
-        selectedRow = table.rows["row-" + zone + '-' + (row+1)];
+        var selectedRow = table.rows["row-" + zone + '-' + (row+1)];
     }
 
     // Add the new cell in the table
@@ -227,7 +229,7 @@ function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
         if(i == col) {
 
             // Get the number of cell merged together
-            rowspan = table.rows["row-" + zone + '-' + row].cells["col-" + zone + '-' + row + '-' + col].rowSpan;
+            var rowspan = table.rows["row-" + zone + '-' + row].cells["col-" + zone + '-' + row + '-' + col].rowSpan;
 
             // If some cell are merged together
             if(rowspan != 1) {
@@ -267,7 +269,7 @@ function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
                 cell.innerHTML = cellHTML(zone, row, col);
 
                 // Create the new cells for the related columns
-                for(x = 0; x < rel.length; x++) {
+                for(var x = 0; x < rel.length; x++) {
 
                     var relId  = rel[x].id;
                     var relRow = row;
@@ -310,34 +312,34 @@ function fillDatalist() {
     document.getElementsByClassName('dl-countermeasures').innerHTML = '';
     document.getElementsByClassName('dl-requirements').innerHTML = '';
 
-    for(i = 0; i < zone_list.length; i++)
+    for(var i = 0; i < zone_list.length; i++)
         document.getElementsByClassName('dl-zone').innerHTML += '<option value="'+zone_list[i]+'" />';
 
-    for(i = 0; i < conn_list.length; i++)
+    for(var i = 0; i < conn_list.length; i++)
         document.getElementsByClassName('dl-conn').innerHTML += '<option value="'+conn_list[i]+'" />';
 
-    for(i = 0; i < element_list.length; i++)
+    for(var i = 0; i < element_list.length; i++)
         document.getElementsByClassName('dl-element').innerHTML += '<option value="'+element_list[i]+'" />';
 
-    for(i = 0; i < failure_mode_list.length; i++)
+    for(var i = 0; i < failure_mode_list.length; i++)
         document.getElementsByClassName('dl-failure-mode').innerHTML += '<option value="'+failure_mode_list[i]+'" />';
 
-    for(i = 0; i < effect_global_list.length; i++)
+    for(var i = 0; i < effect_global_list.length; i++)
         document.getElementsByClassName('dl-effect-global').innerHTML += '<option value="'+effect_global_list[i]+'" />';
 
-    for(i = 0; i < effect_local_list.length; i++)
+    for(var i = 0; i < effect_local_list.length; i++)
         document.getElementsByClassName('dl-effect-local').innerHTML += '<option value="'+effect_local_list[i]+'" />';
 
-    for(i = 0; i < risk_Level_list.length; i++)
+    for(var i = 0; i < risk_Level_list.length; i++)
         document.getElementsByClassName('dl-risk-level').innerHTML += '<option value="'+risk_Level_list[i]+'" />';
 
-    for(i = 0; i < countermeasures_list.length; i++)
+    for(var i = 0; i < countermeasures_list.length; i++)
         document.getElementsByClassName('dl-countermeasures').innerHTML += '<option value="'+countermeasures_list[i]+'" />';
 
-    for(i = 0; i < requirements_list.length; i++)
+    for(var i = 0; i < requirements_list.length; i++)
         document.getElementsByClassName('dl-requirements').innerHTML += '<option value="'+requirements_list[i]+'" />';
 
-    for(i = 0; i < notes_list.length; i++)
+    for(var i = 0; i < notes_list.length; i++)
         document.getElementsByClassName('dl-notes').innerHTML += '<option value="'+notes_list[i]+'" />';
 }
 
@@ -412,13 +414,13 @@ $(document).ready(function() {
                 }
 
                 // Do the same for each relative cells
-                for(x = 0; x < rel.length; x++) {
+                for(var x = 0; x < rel.length; x++) {
 
                     var relId  = rel[x].id;
                     var relCol = parseInt(relId.substring(10, relId.length));
 
                     // Copy the values of the cells below this one
-                    for(i = 0; i < (nbrRow - (row+1)); i++) {
+                    for(var i = 0; i < (nbrRow - (row+1)); i++) {
                         var input1 = '#input-' + zone + '-' + (i+row) + '-' + relCol;
                         var input2 = '#input-' + zone + '-' + (i+1+row) + '-' + relCol;
                         $(input1).val($(input2).val());
@@ -460,7 +462,7 @@ $(document).ready(function() {
                  }
 
                  // Do the same for each relative cells
-                 for(x = 0; x < rel.length; x++) {
+                 for(var x = 0; x < rel.length; x++) {
 
                      var relId  = rel[x].id;
                      var relCol = parseInt(relId.substring(10, relId.length));
@@ -489,7 +491,7 @@ $(document).ready(function() {
                  table.rows["row-" + zone + '-' + (nbrRow-n)].deleteCell(cell_idx);
 
                  // Create the new cells for the related columns
-                 for(x = 0; x < rel.length; x++) {
+                 for(var x = 0; x < rel.length; x++) {
 
                      var relId  = rel[x].id;
                      var relCol = parseInt(relId.substring(10, relId.length));
@@ -537,16 +539,20 @@ $(document).ready(function() {
             table2 = document.getElementById('zone-' + i + '-1');
 
             // info += "zone-" + i + "-0::" + (table1.rows.length-1) + ";;";
-            for(r = 0; r < table1.rows.length-1; r++) {
-                for(c = 0; c < nbrColType1; c++) {
-                    info += "col-"+i+"-0-"+r+"-"+c+"::" + document.getElementById("input-"+i+"-0-"+r+"-"+c).value + ";;";
+            for(var r = 0; r < table1.rows.length-1; r++) {
+                for(var c = 0; c < nbrColType1; c++) {
+                    if(document.getElementById("input-"+i+"-0-"+r+"-"+c) != null) {
+                        info += "col-"+i+"-0-"+r+"-"+c+"::" + document.getElementById("input-"+i+"-0-"+r+"-"+c).value + ";;";
+                    }
                 }
             }
 
             // info += "zone-" + i + "-1::" + (table2.rows.length-2) + ";;";
-            for(r = 0; r < table2.rows.length-2; r++) {
-                for(c = 0; c < nbrColType2; c++) {
-                    info += "col-"+i+"-1-"+r+"-"+c+"::" + document.getElementById("input-"+i+"-1-"+r+"-"+c).value + ";;";
+            for(var r = 0; r < table2.rows.length-2; r++) {
+                for(var c = 0; c < nbrColType2; c++) {
+                    if(document.getElementById("input-"+i+"-1-"+r+"-"+c) != null) {
+                        info += "col-"+i+"-1-"+r+"-"+c+"::" + document.getElementById("input-"+i+"-1-"+r+"-"+c).value + ";;";
+                    }
                 }
             }
         }
@@ -577,41 +583,88 @@ $(document).ready(function() {
         var fileReader = new FileReader();
         fileReader.onload = function(fileLoadedEvent)
         {
-            info = fileLoadedEvent.target.result;
-            info = info.split(";;");
+            var info = fileLoadedEvent.target.result;
+            var info = info.split(";;");
 
-            nbrZone = info[0].split("::")[1];
+            var nbrZone = info[0].split("::")[1];
 
-            for(i = 0; i < nbrZone; i++) {
+            for(var i = 0; i < nbrZone; i++) {
                 document.body.innerHTML += zoneHTML(i);
             }
 
-            for(i = 1; i < info.length-1; i++) {
+            for(var i = 1; i < info.length-1; i++) {
 
-                id = info[i].split("::")[0];
-                value = info[i].split("::")[1];
-                zone = parseInt(id.substring(4, id.length));
-                type = parseInt(id.substring(6, id.length));
-                row  = parseInt(id.substring(8, id.length));
-                col  = parseInt(id.substring(10, id.length));
+                console.log("col:" + info[i], i);
 
-                table = document.getElementById('zone-' + zone + '-' + type);
+                var id = info[i].split("::")[0];
+                var value = info[i].split("::")[1];
+                var zone = parseInt(id.substring(4, id.length));
+                var type = parseInt(id.substring(6, id.length));
+                var row  = parseInt(id.substring(8, id.length));
+                var col  = parseInt(id.substring(10, id.length));
 
-                if(type == 0) {
-                    var nbrCol =  nbrColType1;
-                    var nbrRow = table.rows.length-1;
-                }
-                else {
-                    var nbrCol = nbrColType2;
-                    var nbrRow = table.rows.length-2;
-                }
+                var table = document.getElementById('zone-' + zone + '-' + type);
 
+                var zone = zone + '-' + type
+
+                console.log(i);
                 if(row > 0) {
-                    NewEntries(table, zone, row, col, rel, nbrRow, nbrCol);
-                }
 
-                document.getElementById('input-' + zone + '-' + type + '-' + row + '-' + col).value = value;
+                    var rel = $('td[rel="' + zone + '-' + (row-1) + '-' + col + '"]');
+
+                    if(type == 0) {
+                        var nbrCol =  nbrColType1;
+                        // var nbrRow = table.rows.length-1;   // Problem
+                    }
+                    else {
+                        var nbrCol = nbrColType2;
+                        // var nbrRow = table.rows.length-2;   // Problem
+                    }
+
+                    var nbrRow = row;
+
+                    // console.log("--------------------------------------------");
+                    // console.log("nbrRow:" + nbrRow);
+                    // console.log('input-' + zone + '-' + type + '-' + row + '-' + col);
+
+                    // hasBtn = document.getElementById('input-' + zone + '-' + type + '-' + row + '-' + col).getAttribute('hasBtn');
+                    // console.log("hasBtn:" + hasBtn)
+
+                    // console.log('input-' + zone + '-' + (row-1) + '-' + col);
+                    var isRel = document.getElementById('col-' + zone + '-' + (row-1) + '-' + col).getAttribute('rel');
+                    //
+                    // console.log("isRel:" + isRel);
+                    // console.log('input-' + zone + '-' + row + '-' + col);
+                    // console.log("NewEntries2:", zone, row, col, rel, nbrRow, nbrCol)
+
+                    if(isRel == null) {
+
+                        // Change icone + -> -
+                        document.getElementById('btn-' + zone + '-' + (row-1) + '-' + col).innerHTML = "-";
+
+                        // Change state of the button
+                        document.getElementById('btn-' + zone + '-' + (row-1) + '-' + col).setAttribute('state', '-');
+
+                        NewEntries(table, zone, row-1, col, rel, nbrRow, nbrCol);
+                    }
+                }
+                console.log(i);
+                document.getElementById('input-' + zone + '-' + row + '-' + col).value = value;
+                console.log(i);
             }
+
+            // for(var i = 1; i < info.length-1; i++) {
+            //
+            //     id = info[i].split("::")[0];
+            //     value = info[i].split("::")[1];
+            //     zone = parseInt(id.substring(4, id.length));
+            //     type = parseInt(id.substring(6, id.length));
+            //     row  = parseInt(id.substring(8, id.length));
+            //     col  = parseInt(id.substring(10, id.length));
+            //
+            //     // Put in another loop
+            //     document.getElementById('input-' + zone + '-' + type + '-' + row + '-' + col).value = value;
+            // }
         };
         fileReader.readAsText(fileToLoad, "UTF-8");
     });
