@@ -532,7 +532,16 @@ $(document).ready(function() {
     // https://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/
     $(document).on("click", 'button[id="save"]', function(ev) {
 
-        var info = "nbrZone::" + nbrZone + ";;";
+        var info = "";
+        info += "System::" + document.getElementById("system").value + ";;";
+        info += "Date::" + document.getElementById("date").value + ";;";
+        info += "Authore::" + document.getElementById("authore").value + ";;";
+        info += "Approved-by::" + document.getElementById("approved-by").value + ";;";
+        info += "filename::" + document.getElementById("filename").value + ";;";
+
+        info += "nbrZone::" + nbrZone + ";;";
+
+        console.log(info);
 
         for(i = 0; i < nbrZone; i++) {
             table1 = document.getElementById('zone-' + i + '-0');
@@ -586,15 +595,19 @@ $(document).ready(function() {
             var info = fileLoadedEvent.target.result;
             var info = info.split(";;");
 
-            var nbrZone = info[0].split("::")[1];
+            document.getElementById("system").setAttribute('value', info[0].split("::")[1]);
+            document.getElementById("date").setAttribute('value', info[1].split("::")[1]);
+            document.getElementById("authore").setAttribute('value', info[2].split("::")[1]);
+            document.getElementById("approved-by").setAttribute('value', info[3].split("::")[1]);
+            document.getElementById("filename").setAttribute('value', info[4].split("::")[1]);
+
+            var nbrZone = info[5].split("::")[1];
 
             for(var i = 0; i < nbrZone; i++) {
                 document.body.innerHTML += zoneHTML(i);
             }
 
-            for(var i = 1; i < info.length-1; i++) {
-
-                console.log("col:" + info[i], i);
+            for(var i = 6; i < info.length-1; i++) {
 
                 var id = info[i].split("::")[0];
                 var value = info[i].split("::")[1];
@@ -607,7 +620,7 @@ $(document).ready(function() {
 
                 var zone = zone + '-' + type
 
-                console.log(i);
+                // console.log(i);
                 if(row > 0) {
 
                     var rel = $('td[rel="' + zone + '-' + (row-1) + '-' + col + '"]');
@@ -648,9 +661,9 @@ $(document).ready(function() {
                         NewEntries(table, zone, row-1, col, rel, nbrRow, nbrCol);
                     }
                 }
-                console.log(i);
+                // console.log(i);
                 document.getElementById('input-' + zone + '-' + row + '-' + col).value = value;
-                console.log(i);
+                // console.log(i);
             }
 
             // for(var i = 1; i < info.length-1; i++) {
