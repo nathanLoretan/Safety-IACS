@@ -143,6 +143,19 @@ input[hasBtn="true"] {
     /* border: 1px solid blue; */
 }
 
+textarea[hasBtn="true"] {
+    width: calc(100% - 26px);
+    /* height: 60px; */
+    display: inline-block;
+    float: left;
+
+    /* border: 1px solid blue; */
+}
+
+datalist {
+    width: 100%;
+}
+
 button[id^="btn"], button[id^="fbtn"] {
     width: 25px;
     height: 100%;

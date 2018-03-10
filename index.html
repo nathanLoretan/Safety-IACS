@@ -82,19 +82,19 @@
 
                     <!-- Zone -->
                     <td id="col-0-0-0-0" rowspan="1">
-                        <input id="input-0-0-0-0" type="text" class="form-control" list="dl-zone"/>
-                        <datalist class="dl-zone"></datalist>
+                        <textarea id="input-0-0-0-0" type="text" class="form-control" list="dl-zone"/></textarea>
+                        <!-- <datalist class="dl-zone"></datalist> -->
                     </td>
 
                     <!-- Zone Description -->
                     <td id="col-0-0-0-1" rowspan="1">
-                        <textarea id="input-0-0-0-1" type="text" class="form-control" list="zone-description"/></textarea>
+                        <textarea id="input-0-0-0-1" type="text" class="form-control"/></textarea>
                     </td>
 
                     <!-- Connection -->
                     <td id="col-0-0-0-2" rowspan="1">
-                        <input id="input-0-0-0-2" hasBtn="true" type="text" class="form-control" list="dl-conn"/>
-                        <datalist class="dl-conn"></datalist>
+                        <textarea id="input-0-0-0-2" hasBtn="true" type="text" class="form-control" list="dl-conn"/></textarea>
+                        <!-- <datalist class="dl-conn"></datalist> -->
                         <button id="btn-0-0-0-2" state="+" zone="0-0" type="button" class="btn btn-primary">+</button>
                     </td>
 
@@ -105,8 +105,8 @@
 
                     <!-- Elements -->
                     <td id="col-0-0-0-4" rowspan="1">
-                        <input id="input-0-0-0-4"  hasBtn="true" type="text" class="form-control" list="dl-element"/>
-                        <datalist class="dl-element"></datalist>
+                        <textarea id="input-0-0-0-4"  hasBtn="true" type="text" class="form-control" list="dl-element"/></textarea>
+                        <!-- <datalist class="dl-element"></datalist> -->
                         <button id="btn-0-0-0-4" state="+" zone="0-0" type="button" class="btn btn-primary">+</button>
                     </td>
 
@@ -150,40 +150,50 @@
 
                     <!-- Failure Mode -->
                     <td id="col-0-1-0-0" rowspan="1">
-                        <input id="input-0-1-0-0" hasBtn="true" type="text" class="form-control" list="dl-failure-mode"/>
-                        <datalist class="dl-failure-mode"></datalist>
+                        <textarea id="input-0-1-0-0" hasBtn="true" type="text" class="form-control" list="dl-failure-mode"/></textarea>
+                        <!-- <datalist class="dl-failure-mode"></datalist> -->
                         <button id="fbtn-0-1-0-0" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
                     </td>
 
                     <!-- Failure Effect global,  related to failure mode -->
                     <td id="col-0-1-0-1" rowspan="1">
-                        <input id="input-0-1-0-1" type="text" class="form-control" list="dl-effect-global"/>
-                        <datalist class="dl-effect-global"></datalist>
+                        <textarea id="input-0-1-0-1" type="text" class="form-control" list="dl-effect-global"/></textarea>
+                        <!-- <datalist class="dl-effect-global"></datalist> -->
                     </td>
 
                     <!-- Failure Effect local,  related to failure mode -->
                     <td id="col-0-1-0-2" rowspan="1">
-                        <input id="input-0-1-0-2" type="text" class="form-control"  list="dl-effect-local"/>
-                        <datalist class="dl-effect-local"></datalist>
+                        <textarea id="input-0-1-0-2" type="text" class="form-control"  list="dl-effect-local"/></textarea>
+                        <!-- <datalist class="dl-effect-local"></datalist> -->
                     </td>
 
                     <!-- Risk Level -->
                     <td id="col-0-1-0-3" rowspan="1">
-                        <input id="input-0-1-0-3" type="text" class="form-control" list="dl-risk-level"/>
-                        <datalist class="dl-risk-level"></datalist>
+                        <input id="input-0-1-0-3" type="text" data="risk" class="form-control" list="dl-risk-0-1"/>
+                        <datalist id="dl-risk-0-1">
+                            <option value="High-Risk">
+                            <option value="Medium-Risk">
+                            <option value="Low-Risk">
+                        </datalist>
                     </td>
 
                     <!-- Countermeasures -->
                     <td id="col-0-1-0-4" rowspan="1">
-                        <input id="input-0-1-0-4" hasBtn="true" type="text" class="form-control" list="dl-countermeasures"/>
-                        <datalist class="dl-countermeasures"></datalist>
+                        <textarea id="input-0-1-0-4" hasBtn="true" type="text" class="form-control" list="dl-countermeasures"/></textarea>
+                        <!-- <datalist class="dl-countermeasures"></datalist> -->
                         <button id="btn-0-1-0-4" state="+" zone="0-1" type="button" class="btn btn-primary">+</button>
                     </td>
 
                     <!-- Requirements -->
                     <td id="col-0-1-0-5" rel="0-1-0-4" rowspan="1">
-                        <input id="input-0-1-0-5" type="text" class="form-control" list="dl-requirements"/>
-                        <datalist class="dl-requirements"></datalist>
+                        <input id="input-0-1-0-5" type="text" data="requ" class="form-control" list="dl-requ-0-1"/>
+                        <datalist id="dl-requ-0-1">
+                            <option value="Required">
+                            <option value="Recommended">
+                            <option value="Optional">
+                            <option value="Not allowed">
+                            <option value="May be allowed">
+                        </datalist>
                     </td>
 
                     <!-- Notes -->
@@ -196,7 +206,7 @@
         </table>
     </div>
 
-    </br id="space-0">
+    <br id="space-0"/>
 
     <button id="remove-zone-0" type="button" class="btn-control" >
         Remove a zone

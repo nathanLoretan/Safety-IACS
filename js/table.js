@@ -7,15 +7,44 @@ const nbrColType1 = 7;
 const nbrColType2 = 7;
 var   nbrZone = 1;
 
-var zone_list            = ["test1", "test2", "test3", "test4", "test5"];
-var conn_list            = [];
-var element_list         = [];
-var failure_mode_list    = [];
-var effect_global_list   = [];
-var effect_local_list    = [];
-var risk_Level_list      = [];
-var countermeasures_list = [];
-var requirements_list    = [];
+// var zone_list            = ["test1", "test2", "test3", "test4", "test5"];
+// var conn_list            = [];
+// var element_list         = [];
+// var failure_mode_list    = [];
+// var effect_global_list   = [];
+// var effect_local_list    = [];
+// var risk_Level_list      = [];
+// var countermeasures_list = [];
+// var requirements_list    = [];
+
+function areaBtnHTML(zone, row, col) {
+    return  '<textarea id="input-'+zone+'-'+(row+1)+'-'+col+'" hasBtn="true" type="text" class="form-control"/></textarea>' +
+            '<button id="btn-'+zone+'-'+(row+1)+'-'+col+'" state="+" zone="'+zone+'" type="button" class="btn btn-primary">+</button>'
+}
+
+function areaHTML(zone, row, col) {
+    return  '<textarea id="input-'+zone+'-'+(row+1)+'-'+col+'" type="text" class="form-control"/></textarea>'
+}
+
+function riskHTML(zone, row, col) {
+    return  '<input id="input-'+zone+'-'+(row+1)+'-'+col+'" data="risk" type="text" class="form-control" list="dl-risk-' + zone + '"/>' +
+            '<datalist class="dl-requ-'+zone+'">' +
+                '<option value="High-Risk">' +
+                '<option value="Medium-Risk">' +
+                '<option value="Low-Risk">' +
+            '</datalist>'
+}
+
+function requHTML(zone, row, col) {
+    return  '<input id="input-'+zone+'-'+(row+1)+'-'+col+'" data="requ" type="text" class="form-control" list="dl-requ-' + zone + '"/>' +
+            '<datalist id="dl-requ-'+zone+'">' +
+                '<option value="Required">' +
+                '<option value="Recommended">' +
+                '<option value="Optional">' +
+                '<option value="Not allowed">' +
+                '<option value="May be allowed">' +
+            '</datalist>'
+}
 
 function failureHTML(zone) {
     return '' +
@@ -24,40 +53,50 @@ function failureHTML(zone) {
 
             '<!-- Failure Mode -->' +
             '<td id="col-' + zone + '-0-0" rowspan="1">' +
-                '<input id="input-' + zone + '-0-0" hasBtn="true" type="text" class="form-control" list="dl-failure-mode"/>' +
-                '<datalist class="dl-failure-mode"></datalist>' +
+                '<textarea id="input-' + zone + '-0-0" hasBtn="true" type="text" class="form-control" list="dl-failure-mode"/></textarea>' +
+                // '<datalist class="dl-failure-mode"></datalist>' +
                 '<button id="fbtn-' + zone + '-0-0" state="+" zone="' + zone + '" type="button" class="btn btn-primary">+</button>' +
             '</td>' +
 
             '<!-- Failure Effect global,  related to failure mode -->' +
             '<td id="col-' + zone + '-0-1" rowspan="1">' +
-                '<input id="input-' + zone + '-0-1" type="text" class="form-control" list="dl-effect-global"/>' +
-                '<datalist class="dl-effect-global"></datalist>' +
+                '<textarea id="input-' + zone + '-0-1" type="text" class="form-control" list="dl-effect-global"/></textarea>' +
+                // '<datalist class="dl-effect-global"></datalist>' +
             '</td>' +
 
             '<!-- Failure Effect local,  related to failure mode -->' +
             '<td id="col-' + zone + '-0-2" rowspan="1">' +
-                '<input id="input-' + zone + '-0-2" type="text" class="form-control"  list="dl-effect-local"/>' +
-                '<datalist class="dl-effect-local"></datalist>' +
+                '<textarea id="input-' + zone + '-0-2" type="text" class="form-control"  list="dl-effect-local"/></textarea>' +
+                // '<datalist class="dl-effect-local"></datalist>' +
             '</td>' +
 
             '<!-- Risk Level -->' +
             '<td id="col-' + zone + '-0-3" rowspan="1">' +
-                '<input id="input-' + zone + '-0-3" type="text" class="form-control" list="dl-risk-level"/>' +
-                '<datalist class="dl-risk-level"></datalist>' +
+                '<input id="input-' + zone + '-0-3" type="text" data="risk" class="form-control" list="dl-risk-' + zone + '"/>' +
+                '<datalist id="dl-risk-' + zone + '">' +
+                    '<option value="High-Risk">' +
+                    '<option value="Medium-Risk">' +
+                    '<option value="Low-Risk">' +
+                '</datalist>' +
             '</td>' +
 
             '<!-- Countermeasures -->' +
             '<td id="col-' + zone + '-0-4" rowspan="1">' +
-                '<input id="input-' + zone + '-0-4" hasBtn="true" type="text" class="form-control" list="dl-countermeasures"/>' +
-                '<datalist class="dl-countermeasures"></datalist>' +
+                '<textarea id="input-' + zone + '-0-4" hasBtn="true" type="text" class="form-control" list="dl-countermeasures"/></textarea>' +
+                // '<datalist class="dl-countermeasures"></datalist>' +
                 '<button id="btn-' + zone + '-0-4" state="+" zone="' + zone + '" type="button" class="btn btn-primary">+</button>' +
             '</td>' +
 
             '<!-- Requirements -->' +
             '<td id="col-' + zone + '-0-5" rel="' + zone + '-0-4" rowspan="1">' +
-                '<input id="input-' + zone + '-0-5" type="text" class="form-control" list="dl-requirements"/>' +
-                '<datalist class="dl-requirements"></datalist>' +
+                '<input id="input-' + zone + '-0-5" type="text" data="requ" class="form-control" list="dl-requ-' + zone + '"/>' +
+                '<datalist id="dl-requ-' + zone + '">' +
+                    '<option value="Required">' +
+                    '<option value="Recommended">' +
+                    '<option value="Optional">' +
+                    '<option value="Not allowed">' +
+                    '<option value="May be allowed">' +
+                '</datalist>' +
             '</td>' +
 
             '<!-- Notes -->' +
@@ -67,15 +106,6 @@ function failureHTML(zone) {
 
         '</tr>' +
     '</tbody>'
-}
-
-function cellBtnHTML(zone, row, col) {
-    return  '<input id="input-'+zone+'-'+(row+1)+'-'+col+'" hasBtn="true" type="text" class="form-control"/>' +
-            '<button id="btn-'+zone+'-'+(row+1)+'-'+col+'" state="+" zone="'+zone+'" type="button" class="btn btn-primary">+</button>'
-}
-
-function cellHTML(zone, row, col) {
-    return  '<input id="input-'+zone+'-'+(row+1)+'-'+col+'" type="text" class="form-control"/>'
 }
 
 function zoneHTML(zone) {
@@ -108,8 +138,8 @@ function zoneHTML(zone) {
 
                     '<!-- Zone -->' +
                     '<td id="col-' + zoneTable1 +'-0-0" rowspan="1">' +
-                        '<input id="input-' + zoneTable1 +'-0-0" type="text" class="form-control" list="dl-zone"/>' +
-                        '<datalist class="dl-zone"></datalist>' +
+                        '<textarea id="input-' + zoneTable1 +'-0-0" type="text" class="form-control" list="dl-zone"/></textarea>' +
+                        // '<datalist class="dl-zone"></datalist>' +
                     '</td>' +
 
                     '<!-- Zone Description -->' +
@@ -119,8 +149,8 @@ function zoneHTML(zone) {
 
                     '<!-- Connection -->' +
                     '<td id="col-' + zoneTable1 +'-0-2" rowspan="1">' +
-                        '<input id="input-' + zoneTable1 +'-0-2" hasBtn="true" type="text" class="form-control" list="dl-conn"/>' +
-                        '<datalist class="dl-conn"></datalist>' +
+                        '<textarea id="input-' + zoneTable1 +'-0-2" hasBtn="true" type="text" class="form-control" list="dl-conn"/></textarea>' +
+                        // '<datalist class="dl-conn"></datalist>' +
                         '<button id="btn-' + zoneTable1 +'-0-2" state="+" zone="' + zoneTable1 +'" type="button" class="btn btn-primary">+</button>' +
                     '</td>' +
 
@@ -131,8 +161,8 @@ function zoneHTML(zone) {
 
                     '<!-- Elements -->' +
                     '<td id="col-' + zoneTable1 +'-0-4" rowspan="1">' +
-                        '<input id="input-' + zoneTable1 +'-0-4"  hasBtn="true" type="text" class="form-control" list="dl-element"/>' +
-                        '<datalist class="dl-element"></datalist>' +
+                        '<textarea id="input-' + zoneTable1 +'-0-4"  hasBtn="true" type="text" class="form-control" list="dl-element"/></textarea>' +
+                        // '<datalist class="dl-element"></datalist>' +
                         '<button id="btn-' + zoneTable1 +'-0-4" state="+" zone="' + zoneTable1 +'" type="button" class="btn btn-primary">+</button>' +
                     '</td>' +
 
@@ -176,40 +206,50 @@ function zoneHTML(zone) {
 
                     '<!-- Failure Mode -->' +
                     '<td id="col-' + zoneTable2 +'-0-0" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 +'-0-0" hasBtn="true" type="text" class="form-control" list="dl-failure-mode"/>' +
-                        '<datalist class="dl-failure-mode"></datalist>' +
+                        '<textarea id="input-' + zoneTable2 +'-0-0" hasBtn="true" type="text" class="form-control" list="dl-failure-mode"/></textarea>' +
+                        // '<datalist class="dl-failure-mode"></datalist>' +
                         '<button id="fbtn-' + zoneTable2 +'-0-0" state="+" zone="' + zoneTable2 +'" type="button" class="btn btn-primary">+</button>' +
                     '</td>' +
 
                     '<!-- Failure Effect global,  related to failure mode -->' +
                     '<td id="col-' + zoneTable2 +'-0-1" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 +'-0-1" type="text" class="form-control" list="dl-effect-global"/>' +
-                        '<datalist class="dl-effect-global"></datalist>' +
+                        '<textarea id="input-' + zoneTable2 +'-0-1" type="text" class="form-control" list="dl-effect-global"/></textarea>' +
+                        // '<datalist class="dl-effect-global"></datalist>' +
                     '</td>' +
 
                     '<!-- Failure Effect local,  related to failure mode -->' +
                     '<td id="col-' + zoneTable2 +'-0-2" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 +'-0-2" type="text" class="form-control"  list="dl-effect-local"/>' +
-                        '<datalist class="dl-effect-local"></datalist>' +
+                        '<textarea id="input-' + zoneTable2 +'-0-2" type="text" class="form-control"  list="dl-effect-local"/></textarea>' +
+                        // '<datalist class="dl-effect-local"></datalist>' +
                     '</td>' +
 
                     '<!-- Risk Level -->' +
                     '<td id="col-' + zoneTable2 +'-0-3" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 +'-0-3" type="text" class="form-control" list="dl-risk-level"/>' +
-                        '<datalist class="dl-risk-level"></datalist>' +
+                        '<input id="input-' + zoneTable2 +'-0-3" type="text" data="risk" class="form-control" list="dl-risk-' + zoneTable2 +'"/>' +
+                        '<datalist id="dl-risk-' + zoneTable2 +'">' +
+                            '<option value="High-Risk">' +
+                            '<option value="Medium-Risk">' +
+                            '<option value="Low-Risk">' +
+                        '</datalist>' +
                     '</td>' +
 
                     '<!-- Countermeasures -->' +
                     '<td id="col-' + zoneTable2 +'-0-4" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 +'-0-4" hasBtn="true" type="text" class="form-control" list="dl-countermeasures"/>' +
-                        '<datalist class="dl-countermeasures"></datalist>' +
+                        '<textarea id="input-' + zoneTable2 +'-0-4" hasBtn="true" type="text" class="form-control" list="dl-countermeasures"/></textarea>' +
+                        // '<datalist class="dl-countermeasures"></datalist>' +
                         '<button id="btn-' + zoneTable2 +'-0-4" state="+" zone="' + zoneTable2 +'" type="button" class="btn btn-primary">+</button>' +
                     '</td>' +
 
                     '<!-- Requirements -->' +
                     '<td id="col-' + zoneTable2 +'-0-5" rel="' + zoneTable2 +'-0-4" rowspan="1">' +
-                        '<input id="input-' + zoneTable2 +'-0-5" type="text" class="form-control" list="dl-requirements"/>' +
-                        '<datalist class="dl-requirements"></datalist>' +
+                        '<input id="input-' + zoneTable2 +'-0-5" type="text" data="requ" class="form-control" list="dl-requ-' + zoneTable2 +'"/>' +
+                        '<datalist id="dl-requ-' + zoneTable2 +'">' +
+                            '<option value="Required">' +
+                            '<option value="Recommended">' +
+                            '<option value="Optional">' +
+                            '<option value="Not allowed">' +
+                            '<option value="May be allowed">' +
+                        '</datalist>' +
                     '</td>' +
 
                     '<!-- Notes -->' +
@@ -222,7 +262,7 @@ function zoneHTML(zone) {
         '</table>' +
     '</div>' +
 
-    '</br id="space-' + zone + '">' +
+    '<br id="space-' + zone + '"/>' +
 
     '<button id="remove-zone-' + zone + '" type="button" class="btn-control" >' +
         'Remove a zone' +
@@ -297,12 +337,19 @@ function addRel(table, zone, row, col, rel, selectedRow, rowspan) {
     cell.rowSpan = rowspan;
 
     hasBtn = document.getElementById("input-" + zone + '-' + row + '-'+ relCol).getAttribute('hasBtn');
+    data = document.getElementById("input-" + zone + '-' + row + '-'+ relCol).getAttribute('data');
 
-    if(hasBtn == "true") {
-        cell.innerHTML =  cellBtnHTML(zone, relRow, relCol);
+    if(data == "risk") {
+        cell.innerHTML =  riskHTML(zone, relRow, relCol);
+    }
+    else if(data == "requ") {
+        cell.innerHTML =  requHTML(zone, relRow, relCol);
+    }
+    else if(hasBtn == "true") {
+        cell.innerHTML =  areaBtnHTML(zone, relRow, relCol);
     }
     else {
-        cell.innerHTML =  cellHTML(zone, relRow, relCol);
+        cell.innerHTML =  areaHTML(zone, relRow, relCol);
     }
 
     // Add a cell to the related cell to the current related one :D
@@ -386,7 +433,7 @@ function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
 
                 cell.id = "col-" + zone + '-' + (row+1) + '-'+ col;
                 cell.rowSpan = rowspan-1;
-                cell.innerHTML = cellBtnHTML(zone, row, col);
+                cell.innerHTML = areaBtnHTML(zone, row, col);
 
                 // Create the new cells for the related columns
                 for(x = 0; x < rel.length; x++) {
@@ -402,7 +449,7 @@ function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
                     // cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
                     // cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
                     // cell.rowSpan = rowspan-1;
-                    // cell.innerHTML =  cellHTML(zone, relRow, relCol);
+                    // cell.innerHTML =  areaHTML(zone, relRow, relCol);
                 }
             }
             else {
@@ -411,7 +458,7 @@ function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
 
                 cell.id = "col-" + zone + '-' + (row+1) + '-'+ col;
                 cell.rowSpan = 1;
-                cell.innerHTML = cellBtnHTML(zone, row, col);
+                cell.innerHTML = areaBtnHTML(zone, row, col);
 
                 // Create the new cells for the related columns
                 for(var x = 0; x < rel.length; x++) {
@@ -427,7 +474,7 @@ function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
                     // cell.id = "col-" + zone + '-' + (row+1) + '-'+ relCol;
                     // cell.setAttribute('rel', zone + '-' + (row+1) + "-" + col);
                     // cell.rowSpan = 1;
-                    // cell.innerHTML =  cellHTML(zone, relRow, relCol);
+                    // cell.innerHTML =  areaHTML(zone, relRow, relCol);
                 }
             }
         }
@@ -504,7 +551,7 @@ $(document).ready(function() {
     *   . c = row
     *   . d = column
     */
-    fillDatalist();
+    // fillDatalist();
 
     $(document).on("click", 'button[id^="fbtn"]', function(ev) {
 
@@ -713,7 +760,7 @@ $(document).ready(function() {
         // document.body.innerHTML += zoneHTML(nbrZone);
         nbrZone += 1;
 
-        fillDatalist();
+        // fillDatalist();
     });
 
     $(document).on("click", 'button[id^="remove-zone"]', function(ev) {
@@ -866,8 +913,7 @@ $(document).ready(function() {
                     document.body.appendChild(newZone);
 
                     // Remove this zone because it is not sure that it exists
-                    $('#zone-0-1').remove();
-                    $('#space-0').remove();
+                    $('#zone-' + zone + '-1').remove();
                     continue;
                 }
                 else if(id == "table") {
