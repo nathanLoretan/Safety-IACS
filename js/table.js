@@ -184,7 +184,7 @@ function zoneHTML(zone) {
         '<!-- =============================================================== -->' +
         '<br/>' +
         '<!-- =============================================================== -->' +
-        '<table class="header" id="zone-' + zone + '" nbrFailure="1">' +
+        '<table class="header" id="zone-' + zone + '" nbrFailure="1" failureIdx="1">' +
             '<thead>' +
                 '<tr>' +
                     '<th rowspan="2">Failure Mode</th>' +
