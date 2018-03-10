@@ -352,11 +352,11 @@ function addRel(table, zone, row, col, rel, selectedRow, rowspan) {
         cell.innerHTML =  areaHTML(zone, relRow, relCol);
     }
 
-    // Add a cell to the related cell to the current related one :D
-    var interRel = $('td[rel="' + zone + '-' + relRow + '-'+ relCol + '"]');
-    for(var i = 0; i < interRel.length; i++) {
-        addRel(table, zone, relRow, relCol, interRel[i], selectedRow, rowspan);
-    }
+    // // Add a cell to the related cell to the current related one :D
+    // var interRel = $('td[rel="' + zone + '-' + relRow + '-'+ relCol + '"]');
+    // for(var i = 0; i < interRel.length; i++) {
+    //     addRel(table, zone, relRow, relCol, interRel[i], selectedRow, rowspan);
+    // }
 }
 
 function delCopyRel(zone, row, rel, nbrRow) {
@@ -372,11 +372,11 @@ function delCopyRel(zone, row, rel, nbrRow) {
         $(input1).val($(input2).val());
      }
 
-     // Add a cell to the related cell to the current related one :D
-     var interRel = $('td[rel="' + zone + '-' + relRow + '-'+ relCol + '"]');
-     for(var i = 0; i < interRel.length; i++) {
-         delCopyRel(zone, relRow, interRel[i], nbrRow);
-     }
+     // // Add a cell to the related cell to the current related one :D
+     // var interRel = $('td[rel="' + zone + '-' + relRow + '-'+ relCol + '"]');
+     // for(var i = 0; i < interRel.length; i++) {
+     //     delCopyRel(zone, relRow, interRel[i], nbrRow);
+     // }
 }
 
 function delRel(table, zone, row, rel) {
@@ -388,13 +388,13 @@ function delRel(table, zone, row, rel) {
     var cell_idx = table.rows["row-" + zone + '-' + relRow].cells["col-" + zone + '-' + relRow + '-' + relCol].cellIndex;
     table.rows["row-" + zone + '-' + relRow].deleteCell(cell_idx);
 
-    // Add a cell to the related cell to the current related one :D
-    var interRel = $('td[rel="' + zone + '-' + relRow + '-'+ relCol + '"]');
-    // console.log('rel=' + zone + '-' + relRow + '-'+ relCol)
-    // console.log(interRel)
-    for(var i = 0; i < interRel.length; i++) {
-        delRel(table, zone, relRow, interRel[i]);
-    }
+    // // Add a cell to the related cell to the current related one :D
+    // var interRel = $('td[rel="' + zone + '-' + relRow + '-'+ relCol + '"]');
+    // // console.log('rel=' + zone + '-' + relRow + '-'+ relCol)
+    // // console.log(interRel)
+    // for(var i = 0; i < interRel.length; i++) {
+    //     delRel(table, zone, relRow, interRel[i]);
+    // }
 }
 
 function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
@@ -438,7 +438,7 @@ function NewEntries(table, zone, row, col, rel, nbrRow, nbrCol) {
                 // Create the new cells for the related columns
                 for(x = 0; x < rel.length; x++) {
 
-                     addRel(table, zone, row, col, rel[x], selectedRow, rowspan);
+                     addRel(table, zone, row, col, rel[x], selectedRow, rowspan-1);
 
                     // var relId  = rel[x].id;
                     // var relRow = row;
@@ -615,7 +615,7 @@ $(document).ready(function() {
         // Determine the number of column and row in the table
         if(type == 0) {
             var nbrCol =  nbrColType1;
-            var nbrRow = table.rows.length-1;
+            var nbrRow = table.rows.length;
         }
         else {
             var nbrCol = nbrColType2;

@@ -1,13 +1,3 @@
-/* https://css-tricks.com/pure-css-horizontal-scrolling/ */
-
-/*
-1. input align text above
-2. font style
-3. save file
-*/
-
-@page { size: landscape; }
-
 /* Configure the inpector information formula --------------------------------*/
 #data {
     overflow: hidden;
@@ -44,8 +34,10 @@ div.text label {
     text-align: center;
     text-decoration: none;
     vertical-align: bottom;
-    font-size: 14px;
     height: 25px;
+
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #print, #save, #open, #add-zone {
@@ -65,32 +57,29 @@ div.text label {
 }
 
 table {
-    /* Set the scoll of the table */
-    /* width: 1500px; */
-    /* height: auto;
-    width: auto; */
-
     /* Set the border of the Table */
     border-collapse: collapse;
     border-spacing: 0;
 
-    /* 7 col * 250 */
-    /* width: 1750px; */
+    /* The width depends on th and td */
     width: 100%;
 }
 
 /* Set height of the row */
 tr[id^="row-"] {
-    height: 50px;
+    height: 40px;
 }
 
 th {
-    /* background-color: #4CAF50; */
-    /* color: white; */
+    background-color: rgb(112, 173, 71);
+    color: white;
+
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
+
     font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 th, td {
@@ -102,54 +91,46 @@ th, td {
     margin: 0;
     padding: 0;
 
-    /* width: 250px; */
+    /* width 100% / 7 */
     width: 14%;
     height: 100%;
 }
 
 input[id^="input-"] {
     width: 100%;
-    /* height: 60px; */
+    height: 100%;
+
     margin: 0;
     padding: 0;
     border: none;
-
-    /* height: auto; */
-    /* border: 1px solid blue; */
-    height: 100%;
 }
 
 textarea[id^="input-"] {
     width: 100%;
-    /* height: 60px; */
-    margin: 0;
-    padding: 0;
+    height: 100%;
+
+    /* Avoid the textarea to be resized */
     border: none;
     resize: none;
     overflow: auto;
-
-    /* height: auto; */
-    /* border: 1px solid blue; */
-    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 input[hasBtn="true"] {
+    /* width = cell-width - button-width */
     width: calc(100% - 26px);
-    /* height: 60px; */
+
     display: inline-block;
     float: left;
-
-
-    /* border: 1px solid blue; */
 }
 
 textarea[hasBtn="true"] {
+    /* width = cell-width - button-width */
     width: calc(100% - 26px);
-    /* height: 60px; */
+
     display: inline-block;
     float: left;
-
-    /* border: 1px solid blue; */
 }
 
 datalist {
@@ -159,26 +140,31 @@ datalist {
 button[id^="btn"], button[id^="fbtn"] {
     width: 25px;
     height: 100%;
-    /* height: 50px; */
+
+    /* Button beside the textarea */
     display: inline-block;
     float: left;
     margin: 0;
     padding: 0;
 
+    /* Style of the button */
     border: none;
     color: white;
     background-color: #4CAF50;
     text-align: center;
     text-decoration: none;
     vertical-align: bottom;
-    font-weight: bold;
+
     font-size: 20px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Set font style */
 input[id^="input-"], textarea[id^="input-"] {
-    font-size: 10px;
     text-decoration: none;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Configure remove button ---------------------------------------------------*/
