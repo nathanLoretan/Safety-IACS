@@ -120,10 +120,10 @@ function zoneHTML(zone) {
                 '<tr>' +
                     '<th>Zone</th>' +
                     '<th>Zone Description</th>' +
-                    '<th>Connections</th>' +
-                    '<th>Connections Description</th>' +
-                    '<th>Elements</th>' +
-                    '<th>Elements Description</th>' +
+                    '<th>Conduits</th>' +
+                    '<th>Conduits Description</th>' +
+                    '<th>Assets</th>' +
+                    '<th>Assets Description</th>' +
                     '<th>Notes</th>' +
                 '</tr>' +
             '</thead>' +
@@ -143,26 +143,26 @@ function zoneHTML(zone) {
                         '<textarea id="input-' + zoneTable1 +'-0-1" type="text" class="form-control" list="zone-description"/></textarea>' +
                     '</td>' +
 
-                    '<!-- Connections -->' +
+                    '<!-- Conduits -->' +
                     '<td id="col-' + zoneTable1 +'-0-2" rowspan="1">' +
                         '<textarea id="input-' + zoneTable1 +'-0-2" hasBtn="true" type="text" class="form-control" list="dl-conn"/></textarea>' +
                         // '<datalist class="dl-conn"></datalist>' +
                         '<button id="btn-' + zoneTable1 +'-0-2" state="+" zone="' + zoneTable1 +'" type="button" class="btn btn-primary">+</button>' +
                     '</td>' +
 
-                    '<!-- Connections Description -->' +
+                    '<!-- Conduits Description -->' +
                     '<td id="col-' + zoneTable1 +'-0-3" rel="' + zoneTable1 +'-0-2" rowspan="1">' +
                         '<textarea id="input-' + zoneTable1 +'-0-3" type="text" class="form-control" list="conn-description"/></textarea>' +
                     '</td>' +
 
-                    '<!-- Elements -->' +
+                    '<!-- Assets -->' +
                     '<td id="col-' + zoneTable1 +'-0-4" rowspan="1">' +
                         '<textarea id="input-' + zoneTable1 +'-0-4"  hasBtn="true" type="text" class="form-control" list="dl-element"/></textarea>' +
                         // '<datalist class="dl-element"></datalist>' +
                         '<button id="btn-' + zoneTable1 +'-0-4" state="+" zone="' + zoneTable1 +'" type="button" class="btn btn-primary">+</button>' +
                     '</td>' +
 
-                    '<!-- Elements Description, related to elements -->' +
+                    '<!-- Assets Description, related to Assets -->' +
                     '<td id="col-' + zoneTable1 +'-0-5" rel="' + zoneTable1 +'-0-4" rowspan="1">' +
                         '<textarea id="input-' + zoneTable1 +'-0-5" type="text" class="form-control" list="element-description"/></textarea>' +
                     '</td>' +
