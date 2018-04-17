@@ -1,6 +1,6 @@
 # Safety Critical Systems M
 
-Supporting the Regulation of Cyber Security in Safety-Critical Systems (Level M)
+Supporting the Regulation of Cyber Security in Safety-Critical Systems (Level M). University Project
 
 ## Setup
 
